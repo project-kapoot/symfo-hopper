@@ -81,7 +81,8 @@
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts", 
+            "vendor/bin/captainhook install -sf"
         ],
         "post-update-cmd": [
             "@auto-scripts"
