@@ -26,8 +26,6 @@ RUN curl -sS https://getcomposer.org/download/2.8.2/composer.phar -o /usr/local/
 # Définit le répertoire de travail à /var/www
 WORKDIR /var/www
 
-# Supprime le fichier composer.lock (optionnel, selon vos besoins)
-RUN rm composer.lock
 
 # Installe les dépendances PHP définies dans composer.json
 RUN composer install --optimize-autoloader --no-scripts
@@ -38,9 +36,10 @@ RUN mkdir -p var/cache/prod \
 
 
 RUN chown -R www-data:www-data /var/www/var/cache /var/www/var/log
-# Définit les permissions pour permettre l'écriture dans les répertoires de cache et de log
-RUN chmod -R 777 var/cache/prod \
-    && chmod -R 777 var/log
+
+
+RUN useradd hopper
+USER hopper
 
 # Expose le port 80 pour permettre l'accès via HTTP
 EXPOSE 80
