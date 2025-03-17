@@ -42,8 +42,9 @@ RUN mkdir -p var/cache/prod var/log \
 ENV APP_ENV=prod
 
 # Création d'un utilisateur non-root
-RUN useradd hopper
+RUN useradd hopper && usermod -aG www-data hopper
 USER hopper
+
 
 # Expose le port 80 pour permettre l'accès via HTTP
 EXPOSE 80
