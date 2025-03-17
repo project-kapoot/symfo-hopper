@@ -36,13 +36,15 @@ RUN composer install --optimize-autoloader --no-scripts --no-dev
 
 # Crée les répertoires nécessaires pour les fichiers de cache et de log
 RUN mkdir -p var/cache/prod var/log \
-    && chown -R www-data:www-data /var/www/var/cache /var/www/var/log
+    && chown -R www-data:www-data /var/www/var/cache /var/www/var/log /var/www/public
 
 # Définition de l’environnement pour éviter de l’oublier dans docker run
 ENV APP_ENV=prod
 
 # Création d'un utilisateur non-root
+
 RUN useradd hopper && usermod -aG www-data hopper
+RUN chown -R hopper:www-data /var/www && chmod -R 770 /var/www
 USER hopper
 
 
