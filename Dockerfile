@@ -17,6 +17,9 @@ RUN apt update && apt install -y --no-install-recommends \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Activer le module de réécriture d'Apache
+RUN a2enmod rewrite
+
 # Copie tout le contenu du répertoire courant (le projet) dans /var/www dans le conteneur
 COPY . /var/www
 
