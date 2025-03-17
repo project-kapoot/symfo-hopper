@@ -1,0 +1,7 @@
+var
+vendor
+.git
+.idea
+.env.local
+node_modules
+captainhook.json
