@@ -1,23 +1,11 @@
-
 services:
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   database:
     ports:
       - "5432:5432"
-###< doctrine/doctrine-bundle ###
+  ###< doctrine/doctrine-bundle ###
 
-  back:
-    build:
-      context: .
-    ports:
-      - "8080:80"
-    environment:
-      - APP_ENV=dev
-      - DATABASE_URL=postgresql://app:!ChangeMe!@database:5432/app
-    depends_on:
-      - database
-
-###> symfony/mailer ###
+  ###> symfony/mailer ###
   mailer:
     image: axllent/mailpit
     ports:
