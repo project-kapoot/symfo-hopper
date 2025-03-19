@@ -47,7 +47,14 @@ final class MainController extends AbstractController
     #[Route('/hall_of_fame', name: 'app_hall_of_fame')]
     public function hallOfFame(): Response
     {
-        return $this->render('pages/hall_of_fame.html.twig');
+        $players = [
+            ['name' => 'Éléonore', 'score' => 1500],
+            ['name' => 'Manuel', 'score' => 1470],
+            ['name' => 'Anaëlle', 'score' => 1410],
+            ['name' => 'Céleste', 'score' => 1400],
+        ];
+
+        return $this->render('pages/hall_of_fame.html.twig', ['players' => $players] );
     }
 
     #[Route('/about', name: 'app_about')]
