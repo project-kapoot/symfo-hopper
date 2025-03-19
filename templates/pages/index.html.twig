@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Kapoot{% endblock %}
+
+{% block body %}
+    <section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Kapoot
+                </h1>
+                <h2 class="subtitle">
+                    Apprenez tout en vous amusant avec nos quiz interactifs !
+                </h2>
+                <div class="buttons">
+                    <a class="button is-large" href="{{ path('app_create_quiz') }}">Jouer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Hall of Fame</h2>
+            <div class="content">
+                <p>Découvrez les joueurs les plus performants de tous les temps !</p>
+                <ul>
+                    <li>Éléonore - 1500 points</li>
+                    <li>Manuel - 1470 points</li>
+                    <li>Anaëlle - 1410 points</li>
+                    <li>Céleste - 1400 points</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Découvrez le plaisir d'apprendre avec nos quiz</h2>
+            <div class="content">
+                <p>Plongez dans un univers ludique où l'apprentissage devient une aventure. Rejoignez-nous pour une expérience interactive inoubliable !</p>
+                <a class="button" href="{{ path('app_home') }}">S'inscrire</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
