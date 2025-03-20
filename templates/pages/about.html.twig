@@ -2,4 +2,53 @@
 
 {% block title %}About{% endblock %}
 
-{% block body %}<h1>A propos</h1>{% endblock %}
+{% block meta %}
+    <meta name="description" content="Découvrez Kapoot, une application de quiz interactive pour apprendre en s'amusant. Explorez nos fonctionnalités, participez à des jeux en temps réel et rejoignez notre communauté grandissante.">
+    <meta name="keywords" content="quiz>
+{% endblock %}
+
+{% block body %}
+    <section class="section">
+    <div class="container">
+        <h1 class="title">Qui sommes-nous ?</h1>
+        <p>Notre communauté d'étudiants s'agrandit !</p>
+        <p>Rejoignez-nous et explorez les fonctionnalités de notre application.</p>
+    </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="block">
+                <h2 class="subtitle">Explorez les fonctionnalités de notre application</h2>
+                <p>Notre application de quiz offre une expérience interactive unique. Chaque session est conçue pour vous aider à apprendre tout en vous amusant.</p>
+            </div>
+
+             <img src="{{ asset('images/fonctionnalites.png') }}" alt="fonctionnalites">
+
+            <div class="block">
+                <h2 class="subtitle">Interface de jeu en temps réel</h2>
+                <p>Vivez l'excitation d'un jeu en direct avec des questions en temps réel. Répondez rapidement et précisément pour gagner des points.</p>
+            </div>
+
+            <img src="{{ asset('images/temps-reel.png') }}" alt="temps-reel">
+
+            <div class="block">
+                <h2 class="subtitle">Affichage dynamique des questions et réponses</h2>
+                <p>Les questions s'affichent en temps réel et les réponses sont immédiatement évaluées. Restez concentré et répondez rapidement pour maximiser vos points.</p>
+            </div>
+
+            <img src="{{ asset('images/affichage.png') }}" alt="affichage">
+
+            <div class="block">
+                <h2 class="subtitle">Classement en direct pour stimuler la compétition</h2>
+                <p>Suivez votre score en temps réel et comparez-le avec celui des autres joueurs. Le classement en direct stimule la compétition et vous encourage à donner le meilleur de vous-même.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+    <div class="container has-text-centered">
+        <a class="button is-large" href="{{ path('app_home') }}">S'inscrire</a>
+    </div>
+    </section>
+{% endblock %}
