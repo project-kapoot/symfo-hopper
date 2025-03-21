@@ -22,6 +22,9 @@ class UserResponse
     #[ORM\Column]
     private ?\DateInterval $ResponseTime = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $userChoice = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class UserResponse
     public function setResponseTime(\DateInterval $ResponseTime): static
     {
         $this->ResponseTime = $ResponseTime;
+
+        return $this;
+    }
+
+    public function getUserChoice(): ?array
+    {
+        return $this->userChoice;
+    }
+
+    public function setUserChoice(?array $userChoice): static
+    {
+        $this->userChoice = $userChoice;
 
         return $this;
     }
