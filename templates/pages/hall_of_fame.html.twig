@@ -1,27 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hall_of_fame{% endblock %}
+{% block title %}Hall of Fame{% endblock %}
 
 {% block body %}
-    <section class="section">
-    <div class="container">
-        <h1 class="title">Tableau des scores</h1>
-        <p class="subtitle">Les meilleurs joueurs de tous les temps</p>
+    <div class="container mt-5">
+        <h1>Tableau des scores</h1>
+        <p class="lead">Les meilleurs joueurs de tous les temps</p>
 
-        <div class="columns is-multiline is-centered">
+        <div class="row justify-content-center">
             {% for player in players %}
-                <div class="column is-one-third">
+                <div class="col-md-4 mb-4">
                     <div class="card">
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-left">
-                                    <figure class="image is-64x64">
-                                        <img src="{{ asset('images/avatar.png') }}" alt="Avatar">
-                                    </figure>
-                                </div>
-                                <div class="media-content">
-                                    <p class="title is-4">{{ player.name }}</p>
-                                    <p class="subtitle is-6">{{ player.score }} points</p>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('images/avatar.png') }}" alt="Avatar" class="img-fluid rounded-circle mr-3" style="width: 64px;">
+                                <div>
+                                    <h5 class="card-title">{{ player.name }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ player.score }} points</h6>
                                 </div>
                             </div>
                         </div>
@@ -30,5 +25,4 @@
             {% endfor %}
         </div>
     </div>
-    </section>
 {% endblock %}
