@@ -35,6 +35,12 @@ class SessionQuiz
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $atEnding = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $mode = null;
+
     public function __construct()
     {
         $this->Participants = new ArrayCollection();
@@ -113,6 +119,30 @@ class SessionQuiz
     public function setAtEnding(?\DateTimeInterface $atEnding): static
     {
         $this->atEnding = $atEnding;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getMode(): ?string
+    {
+        return $this->mode;
+    }
+
+    public function setMode(string $mode): static
+    {
+        $this->mode = $mode;
 
         return $this;
     }
