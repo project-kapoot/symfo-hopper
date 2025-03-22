@@ -31,6 +31,10 @@ Abstract class Question
     #[ORM\ManyToOne(inversedBy: 'question')]
     private ?UserResponse $userResponse = null;
 
+    #[ORM\ManyToOne(inversedBy: 'question')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quiz $quiz = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +108,18 @@ Abstract class Question
     public function setUserResponse(?UserResponse $userResponse): static
     {
         $this->userResponse = $userResponse;
+
+        return $this;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): static
+    {
+        $this->quiz = $quiz;
 
         return $this;
     }

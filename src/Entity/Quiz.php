@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuizRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,12 +25,22 @@ class Quiz
     #[ORM\Column(length: 50)]
     private ?string $logo = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $questions = [];
+
 
     #[ORM\ManyToOne(inversedBy: 'quizzes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?user $author = null;
+
+    /**
+     * @var Collection<int, Question>
+     */
+    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'quiz')]
+    private Collection $question;
+
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -71,17 +83,6 @@ class Quiz
         return $this;
     }
 
-    public function getQuestions(): array
-    {
-        return $this->questions;
-    }
-
-    public function setQuestions(array $questions): static
-    {
-        $this->questions = $questions;
-
-        return $this;
-    }
 
     public function getAuthor(): ?user
     {
@@ -91,6 +92,36 @@ class Quiz
     public function setAuthor(?user $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->question;
+    }
+
+    public function addQuestion(Question $question): static
+    {
+        if (!$this->question->contains($question)) {
+            $this->question->add($question);
+            $question->setQuiz($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): static
+    {
+        if ($this->question->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getQuiz() === $this) {
+                $question->setQuiz(null);
+            }
+        }
 
         return $this;
     }
