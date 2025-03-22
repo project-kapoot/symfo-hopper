@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserResponseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserResponseRepository::class)]
@@ -24,6 +26,17 @@ class UserResponse
 
     #[ORM\Column(nullable: true)]
     private ?array $userChoice = null;
+
+    /**
+     * @var Collection<int, Question>
+     */
+    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'userResponse')]
+    private Collection $question;
+
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +87,36 @@ class UserResponse
     public function setUserChoice(?array $userChoice): static
     {
         $this->userChoice = $userChoice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->question;
+    }
+
+    public function addQuestion(Question $question): static
+    {
+        if (!$this->question->contains($question)) {
+            $this->question->add($question);
+            $question->setUserResponse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): static
+    {
+        if ($this->question->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getUserResponse() === $this) {
+                $question->setUserResponse(null);
+            }
+        }
 
         return $this;
     }
