@@ -2,4 +2,62 @@
 
 {% block title %}Dashboard{% endblock %}
 
-{% block body %}<h1>tableau de bord</h1>{% endblock %}
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Hello Edwardo !</h5>
+                        <p class="card-text">Edwardo: Il maestro !</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">À propos de moi</h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Suspendisse varius enim in eros.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Quelques statistiques</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Parties : 12</li>
+                            <li class="list-group-item">Quiz présentés : 7</li>
+                            <li class="list-group-item">Quiz créé : 35</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Mes résultats</h5>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <strong>Dernière partie</strong>
+                                <p>HTML, CSS : 1569 Points</p>
+                            </div>
+                            <div class="list-group-item">
+                                <strong>Top Score</strong>
+                                <p>HTML, CSS : 1569 Points</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
