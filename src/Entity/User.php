@@ -19,6 +19,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -35,19 +38,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, Quiz>
+     * @var Collection<int, Quizz>
      */
-    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'author')]
+    #[ORM\OneToMany(targetEntity: Quizz::class, mappedBy: 'author')]
     private Collection $quizzes;
+
+    /**
+     * @var Collection<int, UserResponse>
+     */
+    #[ORM\OneToMany(targetEntity: UserResponse::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $userResponses;
 
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
+        $this->userResponses = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -121,29 +143,59 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Quiz>
+     * @return Collection<int, Quizz>
      */
     public function getQuizzes(): Collection
     {
         return $this->quizzes;
     }
 
-    public function addQuiz(Quiz $quiz): static
+    public function addQuiz(Quizz $quizz): static
     {
-        if (!$this->quizzes->contains($quiz)) {
-            $this->quizzes->add($quiz);
-            $quiz->setAuthor($this);
+        if (!$this->quizzes->contains($quizz)) {
+            $this->quizzes->add($quizz);
+            $quizz->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeQuiz(Quiz $quiz): static
+    public function removeQuiz(Quizz $quizz): static
     {
-        if ($this->quizzes->removeElement($quiz)) {
+        if ($this->quizzes->removeElement($quizz)) {
             // set the owning side to null (unless already changed)
-            if ($quiz->getAuthor() === $this) {
-                $quiz->setAuthor(null);
+            if ($quizz->getAuthor() === $this) {
+                $quizz->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserResponse>
+     */
+    public function getUserResponses(): Collection
+    {
+        return $this->userResponses;
+    }
+
+    public function addUserResponse(UserResponse $userResponse): static
+    {
+        if (!$this->userResponses->contains($userResponse)) {
+            $this->userResponses->add($userResponse);
+            $userResponse->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserResponse(UserResponse $userResponse): static
+    {
+        if ($this->userResponses->removeElement($userResponse)) {
+            // set the owning side to null (unless already changed)
+            if ($userResponse->getPlayer() === $this) {
+                $userResponse->setPlayer(null);
             }
         }
 

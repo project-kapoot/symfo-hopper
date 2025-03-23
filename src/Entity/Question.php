@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
-Abstract class Question
+class Question
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,23 +19,35 @@ Abstract class Question
     private ?\DateInterval $timeMax = null;
 
     #[ORM\Column]
-    private ?int $scoreMax = null;
-
-    #[ORM\Column]
     private ?int $scoreMin = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $question = null;
+    #[ORM\Column]
+    private ?int $scoreMax = null;
 
     #[ORM\Column(length: 255)]
     private ?string $explanation = null;
 
-    #[ORM\ManyToOne(inversedBy: 'question')]
-    private ?UserResponse $userResponse = null;
-
-    #[ORM\ManyToOne(inversedBy: 'question')]
+    #[ORM\ManyToOne(inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Quiz $quiz = null;
+    private ?Quizz $quizz = null;
+
+    /**
+     * @var Collection<int, UserResponse>
+     */
+    #[ORM\OneToMany(targetEntity: UserResponse::class, mappedBy: 'question', orphanRemoval: true)]
+    private Collection $userResponses;
+
+    /**
+     * @var Collection<int, Answer>
+     */
+    #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', orphanRemoval: true)]
+    private Collection $answers;
+
+    public function __construct()
+    {
+        $this->userResponses = new ArrayCollection();
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,19 +65,7 @@ Abstract class Question
 
         return $this;
     }
-
-    public function getScoreMax(): ?int
-    {
-        return $this->scoreMax;
-    }
-
-    public function setScoreMax(int $scoreMax): static
-    {
-        $this->scoreMax = $scoreMax;
-
-        return $this;
-    }
-
+    
     public function getScoreMin(): ?int
     {
         return $this->scoreMin;
@@ -76,14 +78,14 @@ Abstract class Question
         return $this;
     }
 
-    public function getQuestion(): ?string
+    public function getScoreMax(): ?int
     {
-        return $this->question;
+        return $this->scoreMax;
     }
 
-    public function setQuestion(string $question): static
+    public function setScoreMax(int $scoreMax): static
     {
-        $this->question = $question;
+        $this->scoreMax = $scoreMax;
 
         return $this;
     }
@@ -100,26 +102,74 @@ Abstract class Question
         return $this;
     }
 
-    public function getUserResponse(): ?UserResponse
+    public function getQuizz(): ?Quizz
     {
-        return $this->userResponse;
+        return $this->quizz;
     }
 
-    public function setUserResponse(?UserResponse $userResponse): static
+    public function setQuizz(?Quizz $quizz): static
     {
-        $this->userResponse = $userResponse;
+        $this->quizz = $quizz;
 
         return $this;
     }
 
-    public function getQuiz(): ?Quiz
+    /**
+     * @return Collection<int, UserResponse>
+     */
+    public function getUserResponses(): Collection
     {
-        return $this->quiz;
+        return $this->userResponses;
     }
 
-    public function setQuiz(?Quiz $quiz): static
+    public function addUserResponse(UserResponse $userResponse): static
     {
-        $this->quiz = $quiz;
+        if (!$this->userResponses->contains($userResponse)) {
+            $this->userResponses->add($userResponse);
+            $userResponse->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserResponse(UserResponse $userResponse): static
+    {
+        if ($this->userResponses->removeElement($userResponse)) {
+            // set the owning side to null (unless already changed)
+            if ($userResponse->getQuestion() === $this) {
+                $userResponse->setQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): static
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): static
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getQuestion() === $this) {
+                $answer->setQuestion(null);
+            }
+        }
 
         return $this;
     }

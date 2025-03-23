@@ -14,24 +14,24 @@ class UserResponse
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToOne]
-    private ?user $player = null;
+    
+    #[ORM\Column]
+    private ?int $score = null;
 
     #[ORM\Column]
-    private ?int $Score = null;
+    private ?\DateInterval $responseTime = null;
 
-    #[ORM\Column]
-    private ?\DateInterval $ResponseTime = null;
+    #[ORM\ManyToOne(inversedBy: 'userResponses')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    private ?User $player = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?array $userChoice = null;
+    #[ORM\ManyToOne(inversedBy: 'userResponses')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    private ?SessionQuizz $sessionQuizz = null;
 
-    /**
-     * @var Collection<int, Question>
-     */
-    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'userResponse')]
-    private Collection $question;
+    #[ORM\ManyToOne(inversedBy: 'userResponses')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    private ?Question $question = null;
 
     public function __construct()
     {
@@ -43,80 +43,62 @@ class UserResponse
         return $this->id;
     }
 
-    public function getPlayer(): ?user
-    {
-        return $this->player;
-    }
-
-    public function setPlayer(?user $player): static
-    {
-        $this->player = $player;
-
-        return $this;
-    }
-
     public function getScore(): ?int
     {
-        return $this->Score;
+        return $this->score;
     }
 
-    public function setScore(int $Score): static
+    public function setScore(int $score): static
     {
-        $this->Score = $Score;
+        $this->score = $score;
 
         return $this;
     }
 
     public function getResponseTime(): ?\DateInterval
     {
-        return $this->ResponseTime;
+        return $this->responseTime;
     }
 
-    public function setResponseTime(\DateInterval $ResponseTime): static
+    public function setResponseTime(\DateInterval $responseTime): static
     {
-        $this->ResponseTime = $ResponseTime;
+        $this->responseTime = $responseTime;
 
         return $this;
     }
 
-    public function getUserChoice(): ?array
+    public function getPlayer(): ?User
     {
-        return $this->userChoice;
+        return $this->player;
     }
 
-    public function setUserChoice(?array $userChoice): static
+    public function setPlayer(?User $player): static
     {
-        $this->userChoice = $userChoice;
+        $this->player = $player;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Question>
-     */
-    public function getQuestion(): Collection
+    public function getSessionQuizz(): ?SessionQuizz
+    {
+        return $this->sessionQuizz;
+    }
+
+    public function setSessionQuizz(?SessionQuizz $sessionQuizz): static
+    {
+        $this->sessionQuizz = $sessionQuizz;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
     {
         return $this->question;
     }
 
-    public function addQuestion(Question $question): static
+    public function setQuestion(?Question $question): static
     {
-        if (!$this->question->contains($question)) {
-            $this->question->add($question);
-            $question->setUserResponse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): static
-    {
-        if ($this->question->removeElement($question)) {
-            // set the owning side to null (unless already changed)
-            if ($question->getUserResponse() === $this) {
-                $question->setUserResponse(null);
-            }
-        }
+        $this->question = $question;
 
         return $this;
     }

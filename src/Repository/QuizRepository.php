@@ -7,17 +7,17 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Quiz>
+ * @extends ServiceEntityRepository<Quizz>
  */
 class QuizRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Quiz::class);
+        parent::__construct($registry, Quizz::class);
     }
 
 //    /**
-//     * @return Quiz[] Returns an array of Quiz objects
+//     * @return Quizz[] Returns an array of Quizz zobjects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class QuizRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Quiz
+//    public function findOneBySomeField($value): ?Quizz
 //    {
 //        return $this->createQueryBuilder('q')
 //            ->andWhere('q.exampleField = :val')
