@@ -25,8 +25,8 @@ class Quizz
     #[ORM\Column(length: 50)]
     private ?string $logo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quizzes', onDelete: "SET NULL")]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(inversedBy: 'quizzes')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?User $author = null;
 
     /**
@@ -37,7 +37,6 @@ class Quizz
 
     public function __construct()
     {
-        $this->question = new ArrayCollection();
         $this->questions = new ArrayCollection();
     }
 
