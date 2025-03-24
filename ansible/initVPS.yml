@@ -1,0 +1,18 @@
+- name: init VPS
+  hosts: vpskapoot
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+
+   - name: copy compose.yml
+     ansible.builtin.copy: 
+      dest: ~/kapoot/
+      force: true
+      src: data/compose.yml
+
+  
+
+  
+
+
+     
