@@ -134,11 +134,9 @@ class Question
 
     public function removeUserResponse(UserResponse $userResponse): static
     {
-        if ($this->userResponses->removeElement($userResponse)) {
+        if ($this->userResponses->removeElement($userResponse) && $userResponse->getQuestion() === $this) {
             // set the owning side to null (unless already changed)
-            if ($userResponse->getQuestion() === $this) {
-                $userResponse->setQuestion(null);
-            }
+            $userResponse->setQuestion(null);
         }
 
         return $this;
@@ -164,11 +162,9 @@ class Question
 
     public function removeAnswer(Answer $answer): static
     {
-        if ($this->answers->removeElement($answer)) {
+        if ($this->answers->removeElement($answer) && $answer->getQuestion() === $this) {
             // set the owning side to null (unless already changed)
-            if ($answer->getQuestion() === $this) {
-                $answer->setQuestion(null);
-            }
+            $answer->setQuestion(null);
         }
 
         return $this;

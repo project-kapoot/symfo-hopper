@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\SessionQuizRepository;
+use App\Repository\SessionQuizzRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SessionQuizRepository::class)]
+#[ORM\Entity(repositoryClass: SessionQuizzRepository::class)]
 class SessionQuizz
 {
     #[ORM\Id]
@@ -175,11 +175,9 @@ class SessionQuizz
 
     public function removeUserResponse(UserResponse $userResponse): static
     {
-        if ($this->userResponses->removeElement($userResponse)) {
+        if ($this->userResponses->removeElement($userResponse) && $userResponse->getSessionQuizz() === $this) {
             // set the owning side to null (unless already changed)
-            if ($userResponse->getSessionQuizz() === $this) {
-                $userResponse->setSessionQuizz(null);
-            }
+            $userResponse->setSessionQuizz(null);
         }
 
         return $this;

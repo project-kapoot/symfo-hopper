@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Enum;
 
 enum Mode: string

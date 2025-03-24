@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\QuizRepository;
+use App\Repository\QuizzRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: QuizRepository::class)]
+#[ORM\Entity(repositoryClass: QuizzRepository::class)]
 class Quizz
 {
     #[ORM\Id]
@@ -114,11 +114,9 @@ class Quizz
 
     public function removeQuestion(Question $question): static
     {
-        if ($this->questions->removeElement($question)) {
+        if ($this->questions->removeElement($question) && $question->getQuizz() === $this) {
             // set the owning side to null (unless already changed)
-            if ($question->getQuizz() === $this) {
-                $question->setQuizz(null);
-            }
+            $question->setQuizz(null);
         }
 
         return $this;
