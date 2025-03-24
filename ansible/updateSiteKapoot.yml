@@ -1,0 +1,10 @@
+- name: Update the application kapoot
+  hosts: vpskapoot
+  tasks:
+   - name: Ping my hosts
+     ansible.builtin.ping:
+
+   - name: pull the new image and update the docker network
+     community.docker.docker_compose_v2:
+      project_src: kapoot
+      pull: always
