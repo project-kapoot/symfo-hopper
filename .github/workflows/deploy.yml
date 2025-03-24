@@ -37,7 +37,7 @@ jobs:
     - name: Play Ansible Playbook
       uses: arillso/action.playbook@master
       with:
-        playbook: ansible/updateSiteKappot.yml
+        playbook: ansible/updateSiteKapoot.yml
         private_key: ${{ secrets.VPS_KEY }}
         user: ${{ secrets.VPS_USER }}
         inventory: inventory.ini
