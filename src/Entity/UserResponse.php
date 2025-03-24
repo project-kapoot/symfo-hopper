@@ -33,11 +33,6 @@ class UserResponse
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Question $question = null;
 
-    public function __construct()
-    {
-        $this->question = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
