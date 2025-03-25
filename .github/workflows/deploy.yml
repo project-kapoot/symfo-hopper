@@ -38,11 +38,14 @@ jobs:
     - name: add the private key 
       run: echo "${{ secrets.VPS_KEY }}" > private-key
 
+    - name: change authorisation on the file private-key
+      run: chmod 700 private-key
+
     - name: Create inventory ansible
       run:  echo "${{ secrets.INVENTORY }}" > inventory.ini
 
     - name: download the collection community.docker on Galaxy
       run: ansible-galaxy collection install community.docker
-      
+
     - name: launch the playbook update VPS 
       run: ansible-playbook --key-file private-key -i inventory.ini ansible/updateSiteKapoot.yml
