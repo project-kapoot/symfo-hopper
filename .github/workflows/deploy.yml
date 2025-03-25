@@ -35,17 +35,14 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+    - name: add the private key 
+      run: echo "${{ secrets.VPS_KEY }}" > private-key
+
     - name: Create inventory ansible
       run:  echo "${{ secrets.INVENTORY }}" > inventory.ini
+
     - name: download the collection community.docker on Galaxy
       run: ansible-galaxy collection install community.docker
-    - name: Play Ansible Playbook
-      uses: arillso/action.playbook@master
-      with:
-        playbook: ansible/updateSiteKapoot.yml
-        private_key: ${{ secrets.VPS_KEY }}
-        user: ${{ secrets.VPS_USER }}
-        inventory: inventory.ini
-      env:
-        ANSIBLE_HOST_KEY_CHECKING: 'false'
-        ANSIBLE_DEPRECATION_WARNINGS: 'false'
+      
+    - name: launch the playbook update VPS 
+      run: ansible-playbook --key-file private-key -i inventory.ini ansible/updateSiteKapoot.yml
