@@ -37,6 +37,8 @@ jobs:
         fetch-depth: 0
     - name: Create inventory ansible
       run:  echo "${{ secrets.INVENTORY }}" > inventory.ini
+    - name: download the collection community.docker on Galaxy
+      run: ansible-galaxy collection install community.docker
     - name: Play Ansible Playbook
       uses: arillso/action.playbook@master
       with:
