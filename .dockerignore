@@ -5,3 +5,8 @@ vendor
 .env.local
 node_modules
 captainhook.json
+ansible
+compose*
+!composer*
+Dockerfile
+

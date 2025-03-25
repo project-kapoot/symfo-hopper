@@ -24,8 +24,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/project-kapoot/hopper:dev-latest
-            ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}
+            ghcr.io/ponche/hopper:dev-latest
+            ghcr.io/ponche/hopper:dev-v${{ github.run_number }}
 
   update:
     name: Update the VPS with Ansible
