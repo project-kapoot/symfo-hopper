@@ -2,4 +2,33 @@
 
 {% block title %}Hall_of_fame{% endblock %}
 
-{% block body %}<h1>Tableau des scores</h1>{% endblock %}
+{% block body %}
+    <section class="section">
+    <div class="container">
+        <h1 class="title">Tableau des scores</h1>
+        <p class="subtitle">Les meilleurs joueurs de tous les temps</p>
+
+        <div class="columns is-multiline is-centered">
+            {% for player in players %}
+                <div class="column is-one-third">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img src="{{ asset('images/avatar.png') }}" alt="Avatar">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">{{ player.name }}</p>
+                                    <p class="subtitle is-6">{{ player.score }} points</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </section>
+{% endblock %}
