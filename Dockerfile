@@ -35,10 +35,11 @@ WORKDIR /var/www
 
 
 # Installe les dépendances PHP définies dans composer.json
-RUN composer install --optimize-autoloader --no-scripts 
+RUN composer install --optimize-autoloader 
 
-# compile the assets
-RUN php bin/console assets:install -n
+# compile the assets ( comment line, do in autoScript )
+# RUN php bin/console assets:install -n
+# RUN php bin/console importmap:install -n
 # RUN php bin/console asset-map:compile -n
 
 # Crée les répertoires nécessaires pour les fichiers de cache et de log
@@ -51,7 +52,7 @@ ENV APP_ENV=prod
 # Création d'un utilisateur non-root
 
 RUN useradd hopper && usermod -aG www-data hopper
-RUN chown -R hopper:www-data /var/www && chmod -R 770 /var/www
+RUN chown -R www-data:www-data /var/www
 USER hopper
 
 
