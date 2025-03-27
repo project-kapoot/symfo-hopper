@@ -38,7 +38,8 @@ WORKDIR /var/www
 RUN composer install --optimize-autoloader --no-scripts 
 
 # compile the assets
-RUN php bin/console assets:install
+RUN php bin/console assets:install -n
+RUN php bin/console asset-map:compile -n
 
 # Crée les répertoires nécessaires pour les fichiers de cache et de log
 RUN mkdir -p var/cache/prod var/log \
