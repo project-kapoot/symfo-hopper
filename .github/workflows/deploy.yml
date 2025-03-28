@@ -8,7 +8,14 @@ jobs:
     name: Build and push docker image to registry
     strategy:
       matrix:
-        runner: [ ubuntu-latest, ubuntu-24.04-arm ]
+        arch: [ amd64, arm64 ]
+        include: 
+          - arch: amd64
+            runner: ubuntu-latest
+            platform: linux/amd64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
+          platforms: ${{ matrix.platform }}
           tags: |
             ghcr.io/ponche/hopper:dev-latest
             ghcr.io/ponche/hopper:dev-v${{ github.run_number }}
