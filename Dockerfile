@@ -33,20 +33,20 @@ COPY ./docker/config/apache/default.conf /etc/apache2/sites-enabled/000-default.
 RUN curl -sS https://getcomposer.org/download/2.8.2/composer.phar -o /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer
 
-# Définit le répertoire de travail à /var/www
+    # Définit le répertoire de travail à /var/www
 WORKDIR /var/www
-
-
-# Installe les dépendances PHP définies dans composer.json
-RUN composer install --optimize-autoloader 
-
-# compile the assets ( comment line, do in autoScript )
-# RUN php bin/console assets:install -n
-# RUN php bin/console importmap:install -n
-# RUN php bin/console asset-map:compile -n
 
 # Définition de l’environnement pour éviter de l’oublier dans docker run
 ENV APP_ENV=prod
+
+# Installe les dépendances PHP définies dans composer.json
+RUN composer install --optimize-autoloader 
+# compile the assets ( comment line, do in autoScript )
+# RUN php bin/console assets:install -n
+# RUN php bin/console importmap:install -n
+RUN php bin/console asset-map:compile -n
+RUN php bin/console cache:warmup
+
 
 # Création d'un utilisateur non-root
 
