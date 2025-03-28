@@ -35,8 +35,32 @@ jobs:
           push: true
           platforms: ${{ matrix.platform }}
           tags: |
-            ghcr.io/ponche/hopper:dev-latest
-            ghcr.io/ponche/hopper:dev-v${{ github.run_number }}
+            ghcr.io/ponche/hopper:dev-latest-${{ matrix.arch }}
+            ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-${{ matrix.arch }}
+
+  manifest:
+    name: Create and push multi-arch manifest
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create and push manifest
+        run: |
+          docker manifest create ghcr.io/ponche/hopper:dev-latest \
+            --amend ghcr.io/ponche/hopper:dev-latest-amd64 \
+            --amend ghcr.io/ponche/hopper:dev-latest-arm64
+          
+          docker manifest create ghcr.io/ponche/hopper:dev-v${{ github.run_number }} \
+            --amend ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-amd64 \
+            --amend ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-arm64
+
+          docker manifest push ghcr.io/ponche/hopper:dev-latest
+          docker manifest push ghcr.io/ponche/hopper:dev-v${{ github.run_number }}
 
 
   update:
