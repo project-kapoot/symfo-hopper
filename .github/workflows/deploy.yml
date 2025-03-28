@@ -52,8 +52,8 @@ jobs:
 
       - name: pull the image localy
         run: | 
-          docker pull ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-amd64
-          docker pull ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-arm64
+          docker pull --platform linux/amd64 ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-amd64
+          docker pull --platform linux/arm64 ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-arm64
           
       - name: remove existing manifest 
         run: | 
