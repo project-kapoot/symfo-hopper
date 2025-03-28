@@ -17,8 +17,11 @@ RUN apt update && apt install -y --no-install-recommends \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Activer le module de réécriture d'Apache
+# Activer le module de réécriture d'Apache et 
 RUN a2enmod rewrite
+
+# Activer le module mine 
+RUN a2enmod mime
 
 # Copie tout le contenu du répertoire courant (le projet) dans /var/www dans le conteneur
 COPY . /var/www
@@ -48,7 +51,7 @@ ENV APP_ENV=prod
 # Création d'un utilisateur non-root
 
 RUN useradd hopper && usermod -aG www-data hopper
-RUN chown -R www-data:www-data /var/www/var
+RUN chown -R www-data:www-data /var/www/var && chown -R www-data /var/www/public
 USER hopper
 
 
