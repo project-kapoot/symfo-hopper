@@ -20,7 +20,7 @@ services:
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
   app: 
-    image: ghcr.io/ponche/hopper:dev-latest
+    image: ghcr.io/project-kapoot/hopper:dev-latest
     env_file: ".env"
     depends_on: 
       database: 
