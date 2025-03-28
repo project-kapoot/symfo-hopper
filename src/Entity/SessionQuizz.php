@@ -83,24 +83,24 @@ class SessionQuizz
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
+    public function getStartDate(): ?\DateTimeImmutable
     {
         return $this->startDate;
     }
 
-    public function setStartDate(?\DateTimeInterface $startDate): static
+    public function setStartDate(?\DateTimeImmutable $startDate): static
     {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
+    public function getEndDate(): ?\DateTimeImmutable
     {
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeInterface $endDate): static
+    public function setEndDate(?\DateTimeImmutable $endDate): static
     {
         $this->endDate = $endDate;
 
