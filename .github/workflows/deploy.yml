@@ -49,7 +49,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create and push manifest
+
+      - name: pull the image localy
+        run: | 
+          docker pull ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-amd64
+          docker pull ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-arm64
+          
+      - name: remove existing manifest 
+        run: | 
+          docker manifest rm ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-amd64
+          docker manifest rm ghcr.io/ponche/hopper:dev-v${{ github.run_number }}-arm64
+      - name: Create and push manifest 
         run: |
           docker manifest create ghcr.io/ponche/hopper:dev-latest \
             --amend ghcr.io/ponche/hopper:dev-latest-amd64 \
@@ -66,7 +76,7 @@ jobs:
   update:
     name: Update the VPS with Ansible
     runs-on: ubuntu-latest
-    needs: build
+    needs: manifest
     steps:
     - uses: actions/checkout@v4
       with:
