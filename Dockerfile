@@ -17,8 +17,11 @@ RUN apt update && apt install -y --no-install-recommends \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Activer le module de réécriture d'Apache
+# Activer le module de réécriture d'Apache et 
 RUN a2enmod rewrite
+
+# Activer le module mine 
+RUN a2enmod mime
 
 # Copie tout le contenu du répertoire courant (le projet) dans /var/www dans le conteneur
 COPY . /var/www
@@ -35,11 +38,12 @@ WORKDIR /var/www
 
 
 # Installe les dépendances PHP définies dans composer.json
-RUN composer install --optimize-autoloader --no-scripts --no-dev
+RUN composer install --optimize-autoloader 
 
-# Crée les répertoires nécessaires pour les fichiers de cache et de log
-RUN mkdir -p var/cache/prod var/log \
-    && chown -R www-data:www-data /var/www/var/cache /var/www/var/log /var/www/public
+# compile the assets ( comment line, do in autoScript )
+# RUN php bin/console assets:install -n
+# RUN php bin/console importmap:install -n
+# RUN php bin/console asset-map:compile -n
 
 # Définition de l’environnement pour éviter de l’oublier dans docker run
 ENV APP_ENV=prod
@@ -47,7 +51,7 @@ ENV APP_ENV=prod
 # Création d'un utilisateur non-root
 
 RUN useradd hopper && usermod -aG www-data hopper
-RUN chown -R hopper:www-data /var/www && chmod -R 770 /var/www
+RUN chown -R www-data:www-data /var/www/var && chown -R www-data /var/www/public
 USER hopper
 
 

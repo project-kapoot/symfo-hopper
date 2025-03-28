@@ -6,7 +6,17 @@ on:
 jobs:
   build:
     name: Build and push docker image to registry
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [ amd64, arm64 ]
+        include: 
+          - arch: amd64
+            runner: ubuntu-latest
+            platform: linux/amd64
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -17,30 +27,67 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
+          platforms: ${{ matrix.platform }}
           tags: |
-            ghcr.io/project-kapoot/hopper:dev-latest
-            ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}
+            ghcr.io/project-kapoot/hopper:dev-latest-${{ matrix.arch }}
+            ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-${{ matrix.arch }}
+
+  manifest:
+    name: Create and push multi-arch manifest
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: pull the image localy
+        run: | 
+          docker pull --platform linux/amd64 ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-amd64
+          docker pull --platform linux/arm64 ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-arm64
+          docker pull --platform linux/amd64 ghcr.io/project-kapoot/hopper:dev-latest-amd64
+          docker pull --platform linux/arm64 ghcr.io/project-kapoot/hopper:dev-latest-arm64
+          
+      - name: Create and push manifest 
+        run: |
+          docker manifest create ghcr.io/project-kapoot/hopper:dev-latest \
+            --amend ghcr.io/project-kapoot/hopper:dev-latest-amd64 \
+            --amend ghcr.io/project-kapoot/hopper:dev-latest-arm64
+          
+          docker manifest create ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }} \
+            --amend ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-amd64 \
+            --amend ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-arm64
+
+          docker manifest push ghcr.io/project-kapoot/hopper:dev-latest
+          docker manifest push ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}
+
 
   update:
     name: Update the VPS with Ansible
     runs-on: ubuntu-latest
-    needs: build
+    needs: manifest
     steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: add the private key 
+      run: echo "${{ secrets.VPS_KEY }}" > private-key
+
+    - name: change authorisation on the file private-key
+      run: chmod 700 private-key
+
     - name: Create inventory ansible
       run:  echo "${{ secrets.INVENTORY }}" > inventory.ini
-    - name: Play Ansible Playbook
-      uses: arillso/action.playbook@master
-      with:
-        playbook: ansible/updateSiteKapoot.yml
-        private_key: ${{ secrets.VPS_KEY }}
-        user: ${{ secrets.VPS_USER }}
-        inventory: inventory.ini
-      env:
-        ANSIBLE_HOST_KEY_CHECKING: 'false'
-        ANSIBLE_DEPRECATION_WARNINGS: 'false'
+
+    - name: download the collection community.docker on Galaxy
+      run: ansible-galaxy collection install community.docker
+
+    - name: launch the playbook update VPS 
+      run: ansible-playbook --key-file private-key -i inventory.ini ansible/updateSiteKapoot.yml

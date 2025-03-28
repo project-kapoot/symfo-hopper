@@ -10,6 +10,13 @@
       force: true
       src: data/compose.yml
 
+   - name: copy .env 
+     ansible.builtin.copy:
+      dest: ~/kapoot/
+      force: false
+      src: data/.env
+
+
   
 
   

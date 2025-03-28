@@ -4,6 +4,18 @@
    - name: Ping my hosts
      ansible.builtin.ping:
 
+   - name: copy compose.yml
+     ansible.builtin.copy: 
+      dest: ~/kapoot/
+      force: true
+      src: data/compose.yml
+
+   - name: copy .env 
+     ansible.builtin.copy:
+      dest: ~/kapoot/
+      force: false
+      src: data/.env
+
    - name: pull the new image and update the docker network
      community.docker.docker_compose_v2:
       project_src: kapoot
