@@ -25,7 +25,7 @@ class SessionQuizzFixtures extends Fixture implements DependentFixtureInterface
 
             $startDate = $sessionQuizz->getStartDate();
 
-            $sessionQuizz->setEndDate(($startDate->modify('+1 hour')));
+            $sessionQuizz->setEndDate($startDate->modify('+1 hour'));
 
             $quizz = $this->getReference('quizz_' . $i, Quizz::class);
             $sessionQuizz->setQuizz($quizz);
@@ -34,6 +34,8 @@ class SessionQuizzFixtures extends Fixture implements DependentFixtureInterface
             $sessionQuizz->setPresenter($presenter);
 
             $manager->persist($sessionQuizz);
+
+            $this->addReference('sessionQuizz_' . $i, $sessionQuizz);
         }
 
         $manager->flush();
