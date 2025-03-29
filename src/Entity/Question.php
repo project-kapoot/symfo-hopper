@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
@@ -15,6 +16,12 @@ class Question
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $explanation = null;
+
     #[ORM\Column]
     private ?\DateInterval $timeMax = null;
 
@@ -23,9 +30,6 @@ class Question
 
     #[ORM\Column]
     private ?int $scoreMax = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $explanation = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
@@ -52,6 +56,30 @@ class Question
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getExplanation(): ?string
+    {
+        return $this->explanation;
+    }
+
+    public function setExplanation(string $explanation): static
+    {
+        $this->explanation = $explanation;
+
+        return $this;
     }
 
     public function getTimeMax(): ?\DateInterval
@@ -86,18 +114,6 @@ class Question
     public function setScoreMax(int $scoreMax): static
     {
         $this->scoreMax = $scoreMax;
-
-        return $this;
-    }
-
-    public function getExplanation(): ?string
-    {
-        return $this->explanation;
-    }
-
-    public function setExplanation(string $explanation): static
-    {
-        $this->explanation = $explanation;
 
         return $this;
     }
