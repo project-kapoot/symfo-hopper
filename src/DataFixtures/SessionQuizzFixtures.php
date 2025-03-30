@@ -19,14 +19,14 @@ class SessionQuizzFixtures extends Fixture implements DependentFixtureInterface
         // create 50 session quizz
         for ($i = 0; $i < 50; $i++) {
             $sessionQuizz = new SessionQuizz();
+            $rndIndex = $faker->randomDigit(0, 9);
 
             $quizz = $this->getReference('quizz_' . $i, Quizz::class);
-            $presenter = $this->getReference('user_' . $i, User::class);
+            $presenter = $this->getReference('editor_' . $rndIndex, User::class);
 
             $startDate = new \DateTimeImmutable($faker->dateTimeBetween('-1 month', '-2 weeks')->format('Y-m-d H:i:s'));
 
-            $sessionQuizz->setStatus($faker->randomElement(['waiting', 'in_progress', 'finished']))
-                ->setMode($faker->randomElement(['solo', 'multi_players']))
+            $sessionQuizz->setStatus('finished') // ['waiting', 'in_progress', 'finished']
                 ->setStartDate($startDate)
                 ->setEndDate($startDate->modify('+1 hour'))
                 ->setQuizz($quizz)
@@ -35,6 +35,16 @@ class SessionQuizzFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($sessionQuizz);
 
             $this->addReference('sessionQuizz_' . $i, $sessionQuizz);
+
+            if($i < 30) {
+                $sessionQuizz->setMode('multi_players');
+
+                $this->addReference('sessionQuizzMultiPlayers_' . $i, $sessionQuizz); // session quizz multi 0-29
+            } else {
+                $sessionQuizz->setMode('solo');
+
+                $this->addReference('sessionQuizzSolo_' . ($i - 30), $sessionQuizz); // session quizz solo 0-19
+            }
         }
         $manager->flush();
     }

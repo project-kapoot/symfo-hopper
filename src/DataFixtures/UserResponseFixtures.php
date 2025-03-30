@@ -18,7 +18,8 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
         ObjectManager $manager,
     ): void {
         $faker = Factory::create('fr_FR');
-        // create 50 user responses
+        // create 50 user responses - todo update logic to create min 1 user 
+        // response according to session quizz mode
         for ($i = 0; $i < 50; $i++) {
             $userResponse = new UserResponse();
             

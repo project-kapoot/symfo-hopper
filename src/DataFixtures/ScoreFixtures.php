@@ -16,16 +16,36 @@ class ScoreFixtures extends Fixture implements DependentFixtureInterface
         ObjectManager $manager,
     ): void {
         $faker = Factory::create('fr_FR');
-        // create 50 scores
-        for ($i = 0; $i < 50; $i++) {
+
+        // 30 session quizz multi players > create 2-30 scores
+        for ($i = 0; $i < 30; $i++) {
+            $sessionQuizz = $this->getReference('sessionQuizzMultiPlayers_' . $i, SessionQuizz::class);
+
+            $rndQty = $faker->numberBetween(2, 30);
+
+            for ($j = 0; $j < $rndQty; $j++) {
+                $score = new Score();
+                $indexPlayer = $faker->numberBetween(0, 29);
+                $player = $this->getReference('player_' . $indexPlayer, User::class);
+                $score->setSessionQuizz($sessionQuizz)
+                    ->setFinalScore(500 - $j * 25)
+                    ->setRank($j + 1)
+                    ->setPlayer($player);
+
+                $manager->persist($score);
+            }
+        }
+
+        // 20 session quizz solo > create only 1 score
+        for ($i = 0; $i < 20; $i++) {
+            $sessionQuizz = $this->getReference('sessionQuizzSolo_' . $i, SessionQuizz::class);
+
             $score = new Score();
-
-            $player = $this->getReference('user_' . $i, User::class);
-            $sessionQuizz = $this->getReference('sessionQuizz_' . $i, SessionQuizz::class);
-
-            $score->setFinalScore($faker->numberBetween(0, 500))
-                ->setRank($faker->numberBetween(1, 10))
-                ->setSessionQuizz($sessionQuizz)
+            $indexPlayer = $faker->numberBetween(0, 29);
+            $player = $this->getReference('player_' . $indexPlayer, User::class);
+            $score->setSessionQuizz($sessionQuizz)
+                ->setFinalScore($faker->numberBetween(0, 500))
+                ->setRank(1)
                 ->setPlayer($player);
 
             $manager->persist($score);

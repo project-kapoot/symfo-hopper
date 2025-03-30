@@ -15,19 +15,23 @@ class AnswerFixtures extends Fixture implements DependentFixtureInterface
         ObjectManager $manager,
     ): void {
         $faker = Factory::create('fr_FR');
-        // create 50 answers
-        for ($i = 0; $i < 50; $i++) {
-            $answer = new Answer();
 
+        $questionCount = QuestionFixtures::getQuestionCount();
+        // create 4 answers per question
+        for ($i = 0; $i < $questionCount; $i++) {
             $question = $this->getReference('question_' . $i, Question::class);
 
-            $answer->setContent($faker->words(20, true))
-                ->setIsCorrect($faker->randomElement([true, false]))
-                ->setQuestion($question);
+            for ($j = 0; $j < 4; $j++) {
+                $answer = new Answer();
 
-            $manager->persist($answer);
+                $answer->setContent($faker->words(20, true))
+                    ->setIsCorrect($faker->randomElement([true, false]))
+                    ->setQuestion($question);
 
-            $this->addReference('answer_' . $i, $answer);
+                $manager->persist($answer);
+
+                $this->addReference('answer_' . ($i * 4 + $j), $answer);
+            }
         }
         $manager->flush();
     }

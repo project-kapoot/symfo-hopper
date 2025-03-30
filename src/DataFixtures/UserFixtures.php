@@ -23,7 +23,6 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setUsername($faker->userName())
                 ->setEmail($faker->email())
-                ->setRoles($faker->randomElements(['ROLE_USER', 'ROLE_EDITOR', 'ROLE_ADMIN'], 1))
                 ->setGlobalScore($faker->numberBetween(0, 3000))
                 ->setPassword(
                     $this->userPasswordHasher->hashPassword(
@@ -34,6 +33,17 @@ class UserFixtures extends Fixture
             $manager->persist($user);
 
             $this->addReference('user_' . $i, $user);
+
+            if ($i < 30) {
+                $user->setRoles(['ROLE_PLAYER']);
+                $this->addReference('player_' . $i, $user); // player 0-29
+            } elseif ($i < 40) {
+                $user->setRoles(['ROLE_EDITOR']);
+                $this->addReference('editor_' . ($i - 30), $user); // editor 0-9
+            } else {
+                $user->setRoles(['ROLE_ADMIN']);
+                $this->addReference('admin_' . ($i - 40), $user); // admin 0-9
+            }
         }
 
         $manager->flush();

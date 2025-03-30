@@ -19,7 +19,8 @@ class QuizzFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 50; $i++) {
             $quizz = new Quizz();
 
-            $author = $this->getReference('user_' . $i, User::class);
+            $rndIndex = $faker->randomDigit(0, 9);
+            $author = $this->getReference('editor_' . $rndIndex, User::class);
 
             $quizz->setName($faker->words(3, true))
                 ->setDescription($faker->text(200))
