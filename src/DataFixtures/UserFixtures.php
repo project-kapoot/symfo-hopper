@@ -24,14 +24,16 @@ class UserFixtures extends Fixture
             $user->setUsername($faker->userName())
                 ->setEmail($faker->email())
                 ->setRoles($faker->randomElements(['ROLE_USER', 'ROLE_EDITOR', 'ROLE_ADMIN'], 1))
+                ->setGlobalScore($faker->numberBetween(0, 3000))
                 ->setPassword(
                     $this->userPasswordHasher->hashPassword(
                         $user,
                         'password'
                     )
                 );
-            $this->addReference('user_' . $i, $user);
             $manager->persist($user);
+
+            $this->addReference('user_' . $i, $user);
         }
 
         $manager->flush();
