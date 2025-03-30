@@ -1,0 +1,31 @@
+name: Test Suite
+
+on:
+  pull_request:
+    branches: [ '**' ]  # Cible toutes les branches
+  workflow_call:        # Permet d'appeler ce workflow depuis d'autres workflows
+
+jobs:
+  tests:
+    name: Run PHP Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, intl, zip
+          coverage: none
+          
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist
+        
+      - name: Copy .env for testing
+        run: cp .env .env.test.local
+        
+      - name: Execute PHPUnit tests
+        run: php bin/phpunit
