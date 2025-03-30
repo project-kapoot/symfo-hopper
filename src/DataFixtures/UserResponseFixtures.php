@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Answer;
 use App\Entity\Question;
-use App\Entity\Quizz;
 use App\Entity\SessionQuizz;
 use App\Entity\User;
 use App\Entity\UserResponse;
@@ -19,19 +18,18 @@ class UserResponseFixtures extends Fixture implements DependentFixtureInterface
         ObjectManager $manager,
     ): void {
         $faker = Factory::create('fr_FR');
-        // create 50 questions
+        // create 50 user responses
         for ($i = 0; $i < 50; $i++) {
             $userResponse = new UserResponse();
-
-            $userResponse->setScore(500)
-                ->setResponseTime(1000);   
-
+            
             $player = $this->getReference('user_' . $i, User::class);
             $sessionQuizz = $this->getReference('sessionQuizz_' . $i, SessionQuizz::class);
             $question = $this->getReference('question_' . $i, Question::class);
             $answer = $this->getReference('answer_' . $i, Answer::class);
 
-            $userResponse->setPlayer($player)
+            $userResponse->setResponseScore($faker->numberBetween(0, 100))
+                ->setResponseTime($faker->numberBetween(0, 3000))
+                ->setPlayer($player)
                 ->setSessionQuizz($sessionQuizz)
                 ->setQuestion($question)
                 ->addAnswer($answer);
