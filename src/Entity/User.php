@@ -37,6 +37,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $globalScore = null;
+
     /**
      * @var Collection<int, Quizz>
      */
@@ -129,6 +132,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getGlobalScore(): ?int
+    {
+        return $this->globalScore;
+    }
+
+    public function setGlobalScore(?int $globalScore): static
+    {
+        $this->globalScore = $globalScore;
 
         return $this;
     }
