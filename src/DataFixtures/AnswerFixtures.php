@@ -4,10 +4,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Answer;
 use App\Entity\Question;
-use App\Entity\Quizz;
-use App\Entity\SessionQuizz;
-use App\Entity\User;
-use App\Entity\UserResponse;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -19,22 +15,20 @@ class AnswerFixtures extends Fixture implements DependentFixtureInterface
         ObjectManager $manager,
     ): void {
         $faker = Factory::create('fr_FR');
-        // create 50 questions
+        // create 50 answers
         for ($i = 0; $i < 50; $i++) {
             $answer = new Answer();
 
-            $answer->setContent($faker->words(30, true))
-                ->setIsCorrect($faker->randomElement([true, false]));   
-
             $question = $this->getReference('question_' . $i, Question::class);
 
-            $answer->setQuestion($question);
+            $answer->setContent($faker->words(20, true))
+                ->setIsCorrect($faker->randomElement([true, false]))
+                ->setQuestion($question);
 
             $manager->persist($answer);
 
             $this->addReference('answer_' . $i, $answer);
         }
-
         $manager->flush();
     }
 
