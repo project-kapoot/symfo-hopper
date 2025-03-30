@@ -68,7 +68,15 @@ class UserTest extends TestCase
         $user->setEmail($email);
         $this->assertEquals($email, $user->getUserIdentifier());
     }
-    
+    public function testGlobalScoreGetterSetter()
+    {
+        $user = new User();
+        $globalScore = 1000;
+        
+        $user->setGlobalScore($globalScore);
+        $this->assertEquals($globalScore, $user->getGlobalScore());
+    }
+
     public function testQuizzesCollection()
     {
         $user = new User();
