@@ -22,14 +22,14 @@ class UserResponseTest extends TestCase
         $userResponse = new UserResponse();
         $score = 10;
         
-        $userResponse->setScore($score);
-        $this->assertEquals($score, $userResponse->getScore());
+        $userResponse->setResponseScore($score);
+        $this->assertEquals($score, $userResponse->getResponseScore());
     }
     
     public function testResponseTimeGetterSetter()
     {
         $userResponse = new UserResponse();
-        $responseTime = new DateInterval('PT10S'); // 10 secondes
+        $responseTime = 10000; // 10 secondes
         
         $userResponse->setResponseTime($responseTime);
         $this->assertEquals($responseTime, $userResponse->getResponseTime());
