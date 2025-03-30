@@ -16,7 +16,7 @@ class UserResponse
     private ?int $id = null;
     
     #[ORM\Column]
-    private ?int $score = null;
+    private ?int $responseScore = null;
 
     #[ORM\Column]
     private ?int $responseTime = null;
@@ -49,14 +49,14 @@ class UserResponse
         return $this->id;
     }
 
-    public function getScore(): ?int
+    public function getResponseScore(): ?int
     {
-        return $this->score;
+        return $this->responseScore;
     }
 
-    public function setScore(int $score): static
+    public function setResponseScore(int $responseScore): static
     {
-        $this->score = $score;
+        $this->responseScore = $responseScore;
 
         return $this;
     }
