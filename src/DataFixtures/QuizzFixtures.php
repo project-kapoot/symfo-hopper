@@ -19,17 +19,17 @@ class QuizzFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 50; $i++) {
             $quizz = new Quizz();
 
+            $author = $this->getReference('user_' . $i, User::class);
+
             $quizz->setName($faker->words(3, true))
                 ->setDescription($faker->text(200))
-                ->setLogo($faker->word() . '.png');
-
-            $author = $this->getReference('user_' . $i, User::class);
-            $quizz->setAuthor($author);
+                ->setLogo($faker->word() . '.png')
+                ->setAuthor($author);
 
             $manager->persist($quizz);
+
             $this->addReference('quizz_' . $i, $quizz);
         }
-
         $manager->flush();
     }
 
