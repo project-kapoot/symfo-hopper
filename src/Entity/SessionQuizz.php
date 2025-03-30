@@ -47,11 +47,18 @@ class SessionQuizz
     #[ORM\OneToMany(targetEntity: UserResponse::class, mappedBy: 'sessionQuizz', orphanRemoval: true)]
     private Collection $userResponses;
 
+    /**
+     * @var Collection<int, Score>
+     */
+    #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'sessionQuizz')]
+    private Collection $scores;
+
 
     public function __construct()
     {
         $this->participants = new ArrayCollection();
         $this->userResponses = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,6 +185,36 @@ class SessionQuizz
         if ($this->userResponses->removeElement($userResponse) && $userResponse->getSessionQuizz() === $this) {
             // set the owning side to null (unless already changed)
             $userResponse->setSessionQuizz(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Score>
+     */
+    public function getScores(): Collection
+    {
+        return $this->scores;
+    }
+
+    public function addScore(Score $score): static
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores->add($score);
+            $score->setSessionQuizz($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Score $score): static
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getSessionQuizz() === $this) {
+                $score->setSessionQuizz(null);
+            }
         }
 
         return $this;
