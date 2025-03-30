@@ -24,8 +24,5 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist
         
-      - name: Copy .env for testing
-        run: cp .env .env.test.local
-        
       - name: Execute PHPUnit tests
         run: php bin/phpunit
