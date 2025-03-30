@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250329191855 extends AbstractMigration
+final class Version20250330142258 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -28,8 +28,11 @@ final class Version20250329191855 extends AbstractMigration
         $this->addSql('CREATE TABLE question (id SERIAL NOT NULL, quizz_id INT NOT NULL, content TEXT NOT NULL, explanation TEXT NOT NULL, time_max VARCHAR(255) NOT NULL, score_min INT NOT NULL, score_max INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_B6F7494EBA934BCD ON question (quizz_id)');
         $this->addSql('COMMENT ON COLUMN question.time_max IS \'(DC2Type:dateinterval)\'');
-        $this->addSql('CREATE TABLE quizz (id SERIAL NOT NULL, author_id INT DEFAULT NULL, name VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, logo VARCHAR(50) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE quizz (id SERIAL NOT NULL, author_id INT DEFAULT NULL, name VARCHAR(50) NOT NULL, description TEXT NOT NULL, logo VARCHAR(50) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_7C77973DF675F31B ON quizz (author_id)');
+        $this->addSql('CREATE TABLE score (id SERIAL NOT NULL, session_quizz_id INT NOT NULL, player_id INT NOT NULL, final_score INT NOT NULL, rank INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_32993751313F2BA5 ON score (session_quizz_id)');
+        $this->addSql('CREATE INDEX IDX_3299375199E6F5DF ON score (player_id)');
         $this->addSql('CREATE TABLE session_quizz (id SERIAL NOT NULL, presenter_id INT DEFAULT NULL, quizz_id INT DEFAULT NULL, status VARCHAR(255) NOT NULL, mode VARCHAR(255) NOT NULL, start_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, end_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_A70A2FEBDDE4C635 ON session_quizz (presenter_id)');
         $this->addSql('CREATE INDEX IDX_A70A2FEBBA934BCD ON session_quizz (quizz_id)');
@@ -38,9 +41,9 @@ final class Version20250329191855 extends AbstractMigration
         $this->addSql('CREATE TABLE session_quizz_user (session_quizz_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(session_quizz_id, user_id))');
         $this->addSql('CREATE INDEX IDX_9B32400C313F2BA5 ON session_quizz_user (session_quizz_id)');
         $this->addSql('CREATE INDEX IDX_9B32400CA76ED395 ON session_quizz_user (user_id)');
-        $this->addSql('CREATE TABLE "user" (id SERIAL NOT NULL, username VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "user" (id SERIAL NOT NULL, username VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, global_score INT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON "user" (email)');
-        $this->addSql('CREATE TABLE user_response (id SERIAL NOT NULL, player_id INT NOT NULL, session_quizz_id INT NOT NULL, question_id INT NOT NULL, score INT NOT NULL, response_time INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE user_response (id SERIAL NOT NULL, player_id INT NOT NULL, session_quizz_id INT NOT NULL, question_id INT NOT NULL, response_score INT NOT NULL, response_time INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_DEF6EFFB99E6F5DF ON user_response (player_id)');
         $this->addSql('CREATE INDEX IDX_DEF6EFFB313F2BA5 ON user_response (session_quizz_id)');
         $this->addSql('CREATE INDEX IDX_DEF6EFFB1E27F6BF ON user_response (question_id)');
@@ -64,6 +67,8 @@ final class Version20250329191855 extends AbstractMigration
         $this->addSql('ALTER TABLE answer_user_response ADD CONSTRAINT FK_9050CAD052E8E1D5 FOREIGN KEY (user_response_id) REFERENCES user_response (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EBA934BCD FOREIGN KEY (quizz_id) REFERENCES quizz (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE quizz ADD CONSTRAINT FK_7C77973DF675F31B FOREIGN KEY (author_id) REFERENCES "user" (id) ON DELETE SET NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE score ADD CONSTRAINT FK_32993751313F2BA5 FOREIGN KEY (session_quizz_id) REFERENCES session_quizz (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE score ADD CONSTRAINT FK_3299375199E6F5DF FOREIGN KEY (player_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE session_quizz ADD CONSTRAINT FK_A70A2FEBDDE4C635 FOREIGN KEY (presenter_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE session_quizz ADD CONSTRAINT FK_A70A2FEBBA934BCD FOREIGN KEY (quizz_id) REFERENCES quizz (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE session_quizz_user ADD CONSTRAINT FK_9B32400C313F2BA5 FOREIGN KEY (session_quizz_id) REFERENCES session_quizz (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -82,6 +87,8 @@ final class Version20250329191855 extends AbstractMigration
         $this->addSql('ALTER TABLE answer_user_response DROP CONSTRAINT FK_9050CAD052E8E1D5');
         $this->addSql('ALTER TABLE question DROP CONSTRAINT FK_B6F7494EBA934BCD');
         $this->addSql('ALTER TABLE quizz DROP CONSTRAINT FK_7C77973DF675F31B');
+        $this->addSql('ALTER TABLE score DROP CONSTRAINT FK_32993751313F2BA5');
+        $this->addSql('ALTER TABLE score DROP CONSTRAINT FK_3299375199E6F5DF');
         $this->addSql('ALTER TABLE session_quizz DROP CONSTRAINT FK_A70A2FEBDDE4C635');
         $this->addSql('ALTER TABLE session_quizz DROP CONSTRAINT FK_A70A2FEBBA934BCD');
         $this->addSql('ALTER TABLE session_quizz_user DROP CONSTRAINT FK_9B32400C313F2BA5');
@@ -93,6 +100,7 @@ final class Version20250329191855 extends AbstractMigration
         $this->addSql('DROP TABLE answer_user_response');
         $this->addSql('DROP TABLE question');
         $this->addSql('DROP TABLE quizz');
+        $this->addSql('DROP TABLE score');
         $this->addSql('DROP TABLE session_quizz');
         $this->addSql('DROP TABLE session_quizz_user');
         $this->addSql('DROP TABLE "user"');
