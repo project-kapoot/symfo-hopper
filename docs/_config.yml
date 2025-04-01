@@ -22,7 +22,7 @@ title: La documentation Quizz
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   La RTFM du projet hopper
-baseurl: "/symfon-hopper" # the subpath of your site, e.g. /blog
+baseurl: "/symfo-hopper" # the subpath of your site, e.g. /blog
 url: "https://project-kapoot.github.io/symfo-hopper" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  project-kapoot
