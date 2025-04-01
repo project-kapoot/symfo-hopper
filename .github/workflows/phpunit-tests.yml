@@ -8,6 +8,7 @@ on:
 jobs:
   tests:
     name: Run PHP Tests
+    if: ${{ !startsWith(github.head_ref, 'docs/') }}
     runs-on: ubuntu-latest
     
     steps:
