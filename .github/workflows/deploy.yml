@@ -3,8 +3,15 @@ on:
   push:
     branches:
       - develop
+ 
+      
 jobs:
+  test: 
+    uses: ./.github/workflows/phpunit-tests.yml
+
+  
   build:
+    needs: test
     name: Build and push docker image to registry
     strategy:
       matrix:
@@ -33,8 +40,8 @@ jobs:
           push: true
           platforms: ${{ matrix.platform }}
           tags: |
-            ghcr.io/project-kapoot/hopper:dev-latest-${{ matrix.arch }}
-            ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-${{ matrix.arch }}
+            ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-${{ matrix.arch }}
+            ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-${{ matrix.arch }}
 
   manifest:
     name: Create and push multi-arch manifest
@@ -50,23 +57,23 @@ jobs:
 
       - name: pull the image localy
         run: | 
-          docker pull --platform linux/amd64 ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-amd64
-          docker pull --platform linux/arm64 ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-arm64
-          docker pull --platform linux/amd64 ghcr.io/project-kapoot/hopper:dev-latest-amd64
-          docker pull --platform linux/arm64 ghcr.io/project-kapoot/hopper:dev-latest-arm64
+          docker pull --platform linux/amd64 ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-amd64
+          docker pull --platform linux/arm64 ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-arm64
+          docker pull --platform linux/amd64 ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-amd64
+          docker pull --platform linux/arm64 ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-arm64
           
       - name: Create and push manifest 
         run: |
-          docker manifest create ghcr.io/project-kapoot/hopper:dev-latest \
-            --amend ghcr.io/project-kapoot/hopper:dev-latest-amd64 \
-            --amend ghcr.io/project-kapoot/hopper:dev-latest-arm64
+          docker manifest create ghcr.io/${{ github.repository_owner }}/hopper:dev-latest \
+            --amend ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-amd64 \
+            --amend ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-arm64
           
-          docker manifest create ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }} \
-            --amend ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-amd64 \
-            --amend ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}-arm64
+          docker manifest create ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }} \
+            --amend ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-amd64 \
+            --amend ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-arm64
 
-          docker manifest push ghcr.io/project-kapoot/hopper:dev-latest
-          docker manifest push ghcr.io/project-kapoot/hopper:dev-v${{ github.run_number }}
+          docker manifest push ghcr.io/${{ github.repository_owner }}/hopper:dev-latest
+          docker manifest push ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}
 
 
   update:
