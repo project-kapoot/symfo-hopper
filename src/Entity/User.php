@@ -11,10 +11,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\Table(name: "`user`")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
@@ -37,6 +37,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $globalScore = null;
+
     /**
      * @var Collection<int, Quizz>
      */
@@ -49,10 +52,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: UserResponse::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $userResponses;
 
+    /**
+     * @var Collection<int, Score>
+     */
+    #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $scores;
+
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
         $this->userResponses = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +143,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getGlobalScore(): ?int
+    {
+        return $this->globalScore;
+    }
+
+    public function setGlobalScore(?int $globalScore): static
+    {
+        $this->globalScore = $globalScore;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -193,6 +215,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->userResponses->removeElement($userResponse) && $userResponse->getPlayer() === $this) {
             // set the owning side to null (unless already changed)
             $userResponse->setPlayer(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Score>
+     */
+    public function getScores(): Collection
+    {
+        return $this->scores;
+    }
+
+    public function addScore(Score $score): static
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores->add($score);
+            $score->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Score $score): static
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getPlayer() === $this) {
+                $score->setPlayer(null);
+            }
         }
 
         return $this;
