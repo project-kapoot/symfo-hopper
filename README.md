@@ -1,10 +1,10 @@
-# project-kapoot 🎮
+# Quizz Game 🎮
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=bugs)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=project-kapoot_symfo-hopper&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper)
 
 ## 📋 Description
 
-Quiz Game est une application web inspirée de Kahoot permettant de créer et participer à des quiz interactifs en temps réel. Développée avec Symfony 7.2, cette plateforme offre une expérience ludique et engageante pour l'apprentissage et l'évaluation des connaissances, utilisable en mode solo ou multijoueur.
+Quizz Game est une application web inspirée de Kahoot permettant de créer et participer à des quiz interactifs en temps réel. Développée avec Symfony 7.2, cette plateforme offre une expérience ludique et engageante pour l'apprentissage et l'évaluation des connaissances, utilisable en mode solo ou multijoueur.
 
 ## 📚 Documentation
 
@@ -23,7 +23,7 @@ La documentation complète du projet est disponible [ici📋](https://project-ka
 - **Historique des réponses** : Suivi des réponses et des scores de chaque utilisateur
 - **Classement global** : Score cumulatif pour les utilisateurs à travers toutes les sessions
 
-## 🔧 Prérequis techniques
+## 🔧 Specifications techniques
 
 - PHP 8.2 ou supérieur
 - Symfony 7.2
@@ -87,11 +87,12 @@ cd symfo-hopper
 
 # Lancer avec Docker
 docker compose up -d
+symfony serve
 
 # Accès:
-# - Application: http://localhost
+# - Application:  http://localhost:8000
 # - Adminer (DB): http://localhost:8080
-# - Mailpit: http://localhost:8025
+
 ```
 
 ## 🛠️ Tests
@@ -100,33 +101,7 @@ Pour exécuter les tests (nécessite PHPUnit) :
 
 ```bash
 php bin/phpunit
+
 ```
 
-## 🔍 Développement
-
-### Commandes utiles
-
-```bash
-# Créer une nouvelle entité
-php bin/console make:entity
-
-# Créer une migration après modification des entités
-php bin/console make:migration
-
-# Créer un nouveau contrôleur
-php bin/console make:controller
-
-# Voir toutes les routes disponibles
-php bin/console debug:router
-```
-
-## 🤝 Contribution
-
-Pour contribuer au projet :
-
-1. Créez une branche à partir de `develop` avec une convention de nommage appropriée
-   - `feature/` pour les nouvelles fonctionnalités
-   - `fix/` pour les corrections de bugs
-   - `docs/` pour la documentation
-
-> **Important** : Pour les modifications du README, utilisez spécifiquement la branche `docs/readme` afin de ne pas déclencher le workflow `deploy.yml`.
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=project-kapoot_symfo-hopper)
