@@ -5,7 +5,7 @@
 layout: default
 ---
 
-
+{% raw %}
 # Documentation CI/CD
 
 ## Introduction
@@ -403,3 +403,5 @@ ENJOY THIS IS THE END OF THIS LAST WORKFLOW...
 AND NOW YOU GET IT ;) I HOPE SO... :D
 
 WRITTEN BY RP & AB - 30-04-2025
+
+{% endraw %}
