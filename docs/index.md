@@ -11,3 +11,5 @@ layout: default
 ## Documentations
 
 - [Documentation Ansible](./ansible/install-ansible.md)
+
+- [Documentation CICD](./cicd/cicd.md)
