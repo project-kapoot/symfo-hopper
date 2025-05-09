@@ -1,0 +1,233 @@
+/* Styles pour l'effet parallax */
+body {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f9f6e7;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding: 30px;
+}
+
+.error-content {
+  text-align: center;
+  margin-bottom: -10px;
+}
+
+.error-title {
+  font-size: 6rem;
+  color: #c23b37;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+}
+
+.error-message {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.home-button {
+  display: inline-block;
+  background-color: #c23b37;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #a12d29;
+}
+
+/* Styles du jeu */
+.game-container {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  border: 2px solid #c23b37;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background-color: #f9f6e7;
+}
+
+.game-instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  background-color: rgba(249, 246, 231, 0.8);
+}
+
+.key {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 0 6px;
+  font-family: monospace;
+}
+
+.game-button {
+  background-color: #c23b37;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.game-button:hover {
+  background-color: #a12d29;
+}
+
+#game-area {
+  height: 105%;
+  position: relative;
+}
+
+#game-background {
+  background-image: url('./images/background.png');
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-image: url('./images/floor.png');
+  background-repeat: repeat-x;
+  z-index: 2;
+}
+
+#player {
+  width: 50px;
+  height: 70px;
+  position: absolute;
+  bottom: 40px;
+  left: 50px;
+  z-index: 3;
+  background-image: url('./images/456-1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  border-radius: 5px;
+}
+
+#guard {
+  width: 50px;
+  height: 70px;
+  position: absolute;
+  bottom: 40px;
+  left: 1000px;
+  z-index: 3;
+  background-image: url('./images/guard.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
+  border-radius: 5px;
+}
+
+#bullet {
+  width: 20px;
+  height: 10px;
+  position: absolute;
+  bottom: 65px;
+  left: -100px;
+  z-index: 3;
+  background-image: url('./images/bullet.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
+
+#score-display {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 1.2rem;
+  z-index: 5;
+}
+
+.kapoot-image {
+  margin-top: 40px;
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.hidden {
+  display: none !important; /* Forcer la dissimulation */
+}
+
+#game-over {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  text-align: center;
+}
+
+/* Effet parallax pour le fond */
+.parallax-bg {
+  background-image: url('./images/background.png');
+  background-size: cover;
+  background-position: center;
+  transform: translateZ(-1px) scale(2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Support mobile */
+@media (max-width: 768px) {
+  .error-title {
+    font-size: 4rem;
+  }
+  
+  .game-container {
+    height: 250px;
+  }
+}
+
