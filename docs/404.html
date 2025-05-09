@@ -1,25 +1,40 @@
 ---
+layout: default
 permalink: /404.html
-layout: page
+title: 404 KAPOOT - Page Not Found
 ---
+<link rel="stylesheet" href="{{ site.baseurl }}/404-style.css">
+<!-- Important: L'attribut defer doit être en dehors des guillemets -->
+<script src="{{ site.baseurl }}/404-script.js" defer></script>
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+<div class="error-container">
+  <div class="error-content">
+    <h1 class="error-title">404 KAPOOT</h1>
+    <p class="error-message">Oups! Cette page a été éliminée du jeu...</p>
+    <p class="error-submessage">Ne vous inquiétez pas, vous pouvez toujours retourner à la zone sûre!</p>
+    <a href="{{ site.baseurl }}/" class="home-button">Retour à l'accueil</a>
+  </div>
+  
+  <div class="game-container">
+    <div class="game-instructions">
+      <p>Échappez au garde en appuyant sur <span class="key">ESPACE</span> pour sauter!</p>
+      <button id="start-game" class="game-button">Jouer</button>
+    </div>
+    <div id="game-area" class="hidden">
+      <div id="game-background"></div>
+      <div id="floor"></div>
+      <div id="player"></div>
+      <div id="guard"></div>
+      <div id="bullet" class="hidden"></div>
+      <div id="score-display">Score: 0</div>
+    </div>
+    <div id="game-over" class="hidden">
+      <img src="{{ site.baseurl }}/images/404.jpg" alt="404 KAPOOT - Game Over" class="kapoot-image">
+      <p>GAME OVER</p>
+      <button id="restart-game" class="game-button">Réessayer</button>
+    </div>
+  </div>
 </div>
+
+<!-- Fond parallax -->
+<div class="parallax-bg"></div>
