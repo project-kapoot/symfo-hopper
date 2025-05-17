@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f05af4aed9e93bf78f014f2a83bf0916",
+    "content-hash": "c86b220c2774efcd3ce70b2dd3482977",
     "packages": [
         {
             "name": "composer/semver",
@@ -2302,16 +2302,16 @@
         },
         {
             "name": "symfony/asset-mapper",
-            "version": "v7.2.3",
+            "version": "v7.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset-mapper.git",
-                "reference": "d9a514cbaba040691d5b10afc20755590d2ac80a"
+                "reference": "6428e4b6d8cff9c5fe6f40ddbee4c9f6bfdaa0b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/asset-mapper/zipball/d9a514cbaba040691d5b10afc20755590d2ac80a",
-                "reference": "d9a514cbaba040691d5b10afc20755590d2ac80a",
+                "url": "https://api.github.com/repos/symfony/asset-mapper/zipball/6428e4b6d8cff9c5fe6f40ddbee4c9f6bfdaa0b8",
+                "reference": "6428e4b6d8cff9c5fe6f40ddbee4c9f6bfdaa0b8",
                 "shasum": ""
             },
             "require": {
@@ -2361,7 +2361,7 @@
             "description": "Maps directories of assets & makes them available in a public directory with versioned filenames.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/asset-mapper/tree/v7.2.3"
+                "source": "https://github.com/symfony/asset-mapper/tree/v7.2.5"
             },
             "funding": [
                 {
@@ -2377,7 +2377,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-27T11:08:17+00:00"
+            "time": "2025-03-26T11:29:07+00:00"
         },
         {
             "name": "symfony/cache",
@@ -7579,6 +7579,61 @@
                 }
             ],
             "time": "2025-01-07T12:55:42+00:00"
+        },
+        {
+            "name": "symfonycasts/sass-bundle",
+            "version": "v0.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymfonyCasts/sass-bundle.git",
+                "reference": "99d9b3ec1b436c7038ded6a3e38f2b1d65240e21"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymfonyCasts/sass-bundle/zipball/99d9b3ec1b436c7038ded6a3e38f2b1d65240e21",
+                "reference": "99d9b3ec1b436c7038ded6a3e38f2b1d65240e21",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/asset-mapper": "^6.3|^7.0",
+                "symfony/console": "^5.4|^6.3|^7.0",
+                "symfony/filesystem": "^5.4|^6.3|^7.0",
+                "symfony/http-client": "^5.4|^6.3|^7.0",
+                "symfony/process": "^5.4|^6.3|^7.0"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-config-test": "^5.0",
+                "phpunit/phpunit": "^9.6",
+                "symfony/framework-bundle": "^6.3|^7.0",
+                "symfony/phpunit-bridge": "^6.3.9|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfonycasts\\SassBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathéo Daninos",
+                    "homepage": "https://github.com/WebMamba"
+                }
+            ],
+            "description": "Delightful Sass Support for Symfony + AssetMapper",
+            "keywords": [
+                "asset-mapper",
+                "sass"
+            ],
+            "support": {
+                "issues": "https://github.com/SymfonyCasts/sass-bundle/issues",
+                "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.8.2"
+            },
+            "time": "2024-10-22T16:58:17+00:00"
         },
         {
             "name": "twig/extra-bundle",
