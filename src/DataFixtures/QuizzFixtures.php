@@ -25,7 +25,9 @@ class QuizzFixtures extends Fixture implements DependentFixtureInterface
             $quizz->setName($faker->words(3, true))
                 ->setDescription($faker->text(200))
                 ->setLogo($faker->word() . '.png')
-                ->setAuthor($author);
+                ->setAuthor($author)
+                ->setCategory($faker->word())
+                ->setIsPublished($faker->boolean());
 
             $manager->persist($quizz);
 
