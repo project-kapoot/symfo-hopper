@@ -42,6 +42,26 @@ class QuizzTest extends TestCase
         $quizz->setLogo($logo);
         $this->assertEquals($logo, $quizz->getLogo());
     }
+
+    public function testCategoryGetterSetter()
+    {
+        $quizz = new Quizz();
+        $category = "category";
+        
+        $quizz->setCategory($category);
+        $this->assertEquals($category, $quizz->getCategory());
+    }
+
+    public function testIsPublishedGetterSetter()
+    {
+        $quizz = new Quizz();
+        
+        $quizz->setIsPublished(true);
+        $this->assertTrue($quizz->isPublished());
+        
+        $quizz->setIsPublished(false);
+        $this->assertFalse($quizz->isPublished());
+    }
     
     public function testAuthorGetterSetter()
     {
