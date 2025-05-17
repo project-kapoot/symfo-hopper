@@ -55,13 +55,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: pull the image localy
-        run: | 
-          docker pull --platform linux/amd64 ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-amd64
-          docker pull --platform linux/arm64 ghcr.io/${{ github.repository_owner }}/hopper:dev-v${{ github.run_number }}-arm64
-          docker pull --platform linux/amd64 ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-amd64
-          docker pull --platform linux/arm64 ghcr.io/${{ github.repository_owner }}/hopper:dev-latest-arm64
           
       - name: Create and push manifest 
         run: |
