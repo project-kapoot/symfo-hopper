@@ -25,6 +25,12 @@ class Quizz
     #[ORM\Column(length: 50)]
     private ?string $logo = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $category = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPublished = null;
+
     #[ORM\ManyToOne(inversedBy: 'quizzes')]
     #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?User $author = null;
@@ -81,6 +87,29 @@ class Quizz
         return $this;
     }
 
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(?bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
+    }
 
     public function getAuthor(): ?User
     {
