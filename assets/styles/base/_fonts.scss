@@ -1,0 +1,18 @@
+// Google Fonts Import
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+// Font Variables
+$heading-font: 'Baloo Bhaijaan 2', cursive;
+$body-font: 'Nunito', sans-serif;
+
+// Font Styles
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-font;
+  font-weight: 700 !important;
+}
+
+body, p, input, button, textarea, select {
+  font-family: $body-font;
+  font-weight: 600 !important;
+  font-size: 1rem;
+}

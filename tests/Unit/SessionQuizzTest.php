@@ -7,8 +7,6 @@ use App\Entity\SessionQuizz;
 use App\Entity\User;
 use App\Entity\Quizz;
 use App\Entity\UserResponse;
-use App\Enum\Status;
-use App\Enum\Mode;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 
@@ -23,7 +21,7 @@ class SessionQuizzTest extends TestCase
     public function testStatusGetterSetter()
     {
         $sessionQuizz = new SessionQuizz();
-        $status = Status::PENDING->value;
+        $status = 'Pending';
         
         $sessionQuizz->setStatus($status);
         $this->assertEquals($status, $sessionQuizz->getStatus());
@@ -32,7 +30,7 @@ class SessionQuizzTest extends TestCase
     public function testModeGetterSetter()
     {
         $sessionQuizz = new SessionQuizz();
-        $mode = Mode::MULTIPLAYER->value;
+        $mode = 'Solo';
         
         $sessionQuizz->setMode($mode);
         $this->assertEquals($mode, $sessionQuizz->getMode());
