@@ -1,0 +1,16 @@
+@use "./colors" as c;
+
+.bg-purple-dark {
+    background-color: c.$purple-dark;
+}
+.bg-purple-darker {
+    background-color: c.$purple-darker;
+}
+
+.bg-dark {
+    background-color: c.$dark;
+}
+
+.txt-light {
+    color: c.$gray-light;
+}
