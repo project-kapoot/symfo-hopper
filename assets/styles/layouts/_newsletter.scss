@@ -32,11 +32,14 @@ section.newsletter-section {
     position: relative;
     min-height: 15rem;
     z-index: 5;
-    .mascot-illustration {
-      position: absolute;
-      z-index: 2;
-      bottom: 0;
-      animation: verticalSlide 6s ease-in-out infinite alternate;
+    .mascot-illustration-wrapper{
+        min-height: 12rem;
+        .mascot-illustration {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            animation: verticalSlide 6s ease-in-out infinite alternate;
+        }
     }
   }
   .newsletter-form {
