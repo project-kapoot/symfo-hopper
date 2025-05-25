@@ -1,16 +1,33 @@
-@use "./colors" as c;
+@use './colors' as c;
+
+.bg-purple {
+  background-color: c.$purple;
+}
+
+.bg-purple-light {
+  background-color: c.$purple-light;
+}
+
+.bg-purple-mid {
+  background-color: c.$purple-mid;
+}
 
 .bg-purple-dark {
-    background-color: c.$purple-dark;
+  background-color: c.$purple-dark;
 }
+
 .bg-purple-darker {
-    background-color: c.$purple-darker;
+  background-color: c.$purple-darker;
 }
 
 .bg-dark {
-    background-color: c.$dark;
+  background-color: c.$dark;
+}
+
+.txt-orange {
+  color: c.$orange;
 }
 
 .txt-light {
-    color: c.$gray-light;
+  color: c.$gray-light;
 }

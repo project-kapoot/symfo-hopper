@@ -2,6 +2,9 @@
 
 nav {
   background-color: b.$purple-darker;
+  box-shadow: rgba(b.$purple-darker, 0.7) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.75) 0px 30px 60px -30px,
+    rgba(b.$purple-darker, 0.9) 0px -2px 6px 0px inset;
   .nav-item {
     .nav-link {
       display: flex;
@@ -24,7 +27,7 @@ nav {
   }
   .navbar-toggler {
     border-color: transparent !important;
-    .collapsed:focus {
+    &:focus {
       box-shadow: none !important;
     }
   }
