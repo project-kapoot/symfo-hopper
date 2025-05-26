@@ -37,7 +37,7 @@ RUN curl -sS https://getcomposer.org/download/2.8.2/composer.phar -o /usr/local/
 WORKDIR /var/www
 
 # Définition de l’environnement pour éviter de l’oublier dans docker run
-ENV APP_ENV=prod
+# ENV APP_ENV=prod
 
 # Installe les dépendances PHP définies dans composer.json
 RUN composer install --optimize-autoloader 
