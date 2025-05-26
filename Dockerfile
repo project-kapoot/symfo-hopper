@@ -51,10 +51,11 @@ RUN php bin/console cache:warmup
 
 # Création d'un utilisateur non-root
 
-RUN useradd hopper && usermod -aG www-data hopper
-RUN chown -R www-data:www-data /var/www/var && chown -R www-data /var/www/public
-USER hopper
+# RUN useradd hopper && usermod -aG www-data hopper
+# RUN chown -R www-data:www-data /var/www/var && chown -R www-data /var/www/public
+# USER hopper
 
+USER www-data
 
 # Expose le port 80 pour permettre l'accès via HTTP
 EXPOSE 80
