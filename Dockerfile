@@ -44,6 +44,7 @@ RUN composer install --optimize-autoloader
 # compile the assets ( comment line, do in autoScript )
 # RUN php bin/console assets:install -n
 # RUN php bin/console importmap:install -n
+RUN php bin/console sass:build
 RUN php bin/console asset-map:compile -n
 RUN php bin/console cache:warmup
 

@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - Squizz Game{% endblock %}
-
-{% block body %}
-
+{% block title %}Accueil - Squizz Game
 {% endblock %}
 
+{% block body %}
+<div class="homepage-section container">
+	{% include '/homepage/_header.html.twig' %}
+	{% include '/homepage/_intro-section.html.twig' %}
+	{% include '/homepage/_top-players-section.html.twig' %}
+	{% include '/_partials/_newsletter.html.twig' %}
+</div>
+{% endblock %}
