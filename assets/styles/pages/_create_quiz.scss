@@ -1,0 +1,71 @@
+@use './../base/colors' as c;
+
+.quiz-creator-container {
+    /*-----------------
+    Keyframes
+    -----------------*/
+    @keyframes rotate {
+        0% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(180deg) scale(0.6);
+        }
+        100% {
+          transform: rotate(360deg) scale(1);
+        }
+    }
+
+    .shape {
+      position: absolute;
+      display: block;
+      z-index: 1;
+      animation: rotate 20s linear infinite;
+    }
+
+    .section-1-part-r {
+        position: relative;
+        height: 100%;
+        padding-block: 9rem;
+    }
+    .shape-triangle-pink {
+        right: 0;
+        top: 0;
+    }
+    .shape-circle-purple {
+        bottom: 0;
+        left: 1.5rem;
+    }
+
+    .quiz-form-container {
+        .quiz-form {
+            border: 1px solid rgba(#d9d9d9, 0.3);
+            border-radius: 1.2rem;
+        }
+
+        .form-control {
+            background-color: c.$purple-darker;
+            color: c.$light;
+            border: none;
+
+            &::placeholder {
+                color: rgba(c.$light, .6);
+            }
+
+            &:focus,
+            &:active {
+                box-shadow: 0 0 0 .25rem rgba(c.$purple-light, .25);
+            }
+        }
+        input[type=file]::file-selector-button {
+            margin-right: 8px;
+            background: c.$purple-darker !important;
+            padding: 8px 12px;
+            color: rgba(c.$light, .6);
+            cursor: pointer;
+        }
+        textarea {
+            resize: none;
+        }
+    }
+}

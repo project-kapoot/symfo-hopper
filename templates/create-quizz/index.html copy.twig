@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Create QuizzController!{% endblock %}
+
+{% block body %}
+<div class="quiz-creator-container">
+    <!-- Formes géométriques décoratives -->
+    <div class="decorative-shapes">
+        <div class="shape triangle-pink triangle-1"></div>
+        <div class="shape triangle-pink triangle-2"></div>
+        <div class="shape circle-violet circle-1"></div>
+        <div class="shape circle-violet circle-2"></div>
+        <div class="shape circle-violet circle-3"></div>
+    </div>
+
+    <div class="quiz-creator-container container-fluid h-100">
+        <div class="row h-100 align-items-center">
+            <!-- Section gauche - Personnage stylisé -->
+            <div class="col-lg-6 d-none d-lg-block position-relative">
+                <div class="character-section">
+                    <div class="character-illustration">
+                        <img src="{{ asset('images/characters/quiz-creator-character.svg') }}" 
+                             alt="Personnage créateur de quiz" 
+                             class="img-fluid character-img">
+                    </div>
+                    <div class="character-text">
+                        <h2 class="character-title">Créez des quiz<br>extraordinaires</h2>
+                        <p class="character-subtitle">Engagez votre audience avec des questions interactives et personnalisées</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section droite - Formulaire de création -->
+            <div class="col-lg-6 col-12">
+                <div class="quiz-form-container">
+                    <div class="quiz-form-header text-center mb-4">
+                        <h1 class="form-title">Nouveau Quiz</h1>
+                        <p class="form-subtitle">Configurez les paramètres de votre quiz</p>
+                    </div>
+
+                    <form class="quiz-creation-form" action="" method="post" enctype="multipart/form-data">
+                        <!-- Upload de logo -->
+                        <div class="form-group mb-4">
+                            <label for="quiz-logo" class="form-label">Logo du quiz</label>
+                            <div class="logo-upload-container">
+                                <div class="logo-preview" id="logoPreview">
+                                    <div class="logo-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <span>Cliquez pour ajouter un logo</span>
+                                    </div>
+                                </div>
+                                <input type="file" 
+                                       id="quiz-logo" 
+                                       name="quiz_logo" 
+                                       class="form-control logo-input" 
+                                       accept="image/*"
+                                       aria-describedby="logoHelp">
+                                <div id="logoHelp" class="form-text">
+                                    Formats acceptés: JPG, PNG, SVG (max. 2MB)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nom du quiz -->
+                        <div class="form-group mb-4">
+                            <label for="quiz-name" class="form-label required">Nom du quiz</label>
+                            <input type="text" 
+                                   id="quiz-name" 
+                                   name="quiz_name" 
+                                   class="form-control form-control-custom" 
+                                   placeholder="Entrez le nom de votre quiz"
+                                   required
+                                   maxlength="100">
+                            <div class="form-feedback"></div>
+                        </div>
+
+                        <!-- Catégorie -->
+                        <div class="form-group mb-4">
+                            <label for="quiz-category" class="form-label required">Catégorie</label>
+                            <select id="quiz-category" 
+                                    name="quiz_category" 
+                                    class="form-select form-control-custom" 
+                                    required>
+                                <option value="">Sélectionnez une catégorie</option>
+                                <option value="education">Éducation</option>
+                                <option value="divertissement">Divertissement</option>
+                                <option value="science">Science</option>
+                                <option value="histoire">Histoire</option>
+                                <option value="culture">Culture générale</option>
+                                <option value="sport">Sport</option>
+                                <option value="technologie">Technologie</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                            <div class="form-feedback"></div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group mb-4">
+                            <label for="quiz-description" class="form-label">Description</label>
+                            <textarea id="quiz-description" 
+                                      name="quiz_description" 
+                                      class="form-control form-control-custom" 
+                                      placeholder="Décrivez votre quiz en quelques mots..."
+                                      rows="4"
+                                      maxlength="500"></textarea>
+                            <div class="form-text character-count">
+                                <span id="descriptionCount">0</span>/500 caractères
+                            </div>
+                        </div>
+
+                        <!-- Paramètres avancés (optionnel) -->
+                        <div class="form-group mb-4">
+                            <div class="advanced-settings">
+                                <button type="button" 
+                                        class="btn btn-link advanced-toggle p-0" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#advancedSettings"
+                                        aria-expanded="false">
+                                    <i class="fas fa-cog"></i>
+                                    Paramètres avancés
+                                    <i class="fas fa-chevron-down ms-2"></i>
+                                </button>
+
+                                <div class="collapse mt-3" id="advancedSettings">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" 
+                                                       type="checkbox" 
+                                                       id="quiz-timer" 
+                                                       name="quiz_timer">
+                                                <label class="form-check-label" for="quiz-timer">
+                                                    Activer le minuteur
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" 
+                                                       type="checkbox" 
+                                                       id="quiz-shuffle" 
+                                                       name="quiz_shuffle">
+                                                <label class="form-check-label" for="quiz-shuffle">
+                                                    Mélanger les questions
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="form-actions d-flex gap-3">
+                            <button type="button" class="btn btn-secondary btn-custom flex-fill">
+                                <i class="fas fa-save me-2"></i>
+                                Enregistrer comme brouillon
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-custom flex-fill">
+                                <i class="fas fa-plus me-2"></i>
+                                Créer le quiz
+                            </button>
+                        </div>
+
+                        {{ csrf_token('quiz_create') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
