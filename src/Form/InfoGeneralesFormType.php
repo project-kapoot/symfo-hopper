@@ -18,25 +18,25 @@ class InfoGeneralesFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label_format' => 'Nom du quizz',
+                'label' => 'Nom du quizz',
                 'attr' => [
                     'placeholder' => 'ex: Quizz CSS'
                 ],
                 'row_attr' => ['class' => 'mb-3'],
             ])
             ->add('category', TextType::class, [
-                'label_format' => 'Catégorie du quizz',
+                'label' => 'Catégorie du quizz',
                 'attr' => [
                     'placeholder' => 'ex: Les bases du CSS'
                 ],
                 'row_attr' => ['class' => 'mb-3'],
             ])
             ->add('logo', FileType::class, [
-                'label_format' => 'Logo du quizz',
+                'label' => 'Logo du quizz',
                 'row_attr' => ['class' => 'mb-3'],
             ])
             ->add('description', TextareaType::class, [
-                'label_format' => 'Description du quizz',
+                'label' => 'Description du quizz',
                 'attr' => [
                     'placeholder' => 'ex: Quizz contenant des questions basics sur le CSS, flexbox, grid...',
                     'rows' => "5"

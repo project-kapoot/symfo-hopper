@@ -6,32 +6,53 @@
     -----------------*/
     @keyframes rotate {
         0% {
-          transform: rotate(0deg) scale(1);
+            transform: rotate(0deg) scale(1);
         }
         50% {
-          transform: rotate(180deg) scale(0.6);
+            transform: rotate(180deg) scale(0.6);
         }
         100% {
-          transform: rotate(360deg) scale(1);
+            transform: rotate(360deg) scale(1);
         }
     }
 
     .shape {
-      position: absolute;
-      display: block;
-      z-index: 1;
-      animation: rotate 20s linear infinite;
+        position: absolute;
+        display: block;
+        z-index: 1;
+        animation: rotate 20s linear infinite;
     }
 
     .section-1-part-r {
         position: relative;
+    }
+
+    .shape-triangle-yellow {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+  .section-1-part-r {
+        position: relative;
         height: 100%;
         padding-block: 9rem;
     }
+
     .shape-triangle-pink {
         right: 0;
         top: 0;
     }
+
+    .shape-triangle-yellow {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+        right: 0;
+        top: 0;
+    }
+
     .shape-circle-purple {
         bottom: 0;
         left: 1.5rem;
@@ -47,6 +68,8 @@
             background-color: c.$purple-darker;
             color: c.$light;
             border: none;
+            padding: 0.75rem; // Ajout du padding
+            border-radius: 0.375rem; // Ajout du border-radius
 
             &::placeholder {
                 color: rgba(c.$light, .6);
@@ -57,6 +80,7 @@
                 box-shadow: 0 0 0 .25rem rgba(c.$purple-light, .25);
             }
         }
+
         input[type=file]::file-selector-button {
             margin-right: 8px;
             background: c.$purple-darker !important;
@@ -64,8 +88,134 @@
             color: rgba(c.$light, .6);
             cursor: pointer;
         }
+
         textarea {
             resize: none;
         }
+
+    .form-group.time-max { // Ajout du style pour le temps de réponse
+        .form-control {
+            // Ajoutez vos styles ici, par exemple :
+            // background-color: #f0f0f0;
+            // border: 1px solid #ccc;
+            // padding: 0.5rem;
+        }
     }
 }
+
+    
+    .answers-grid {
+        display: grid; // ✅ AJOUTÉ : display manquant
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        .answer-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(c.$light, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: border-color 0.3s ease;
+
+            &:hover {
+                border-color: rgba(c.$purple-darker, 0.5);
+            }
+
+            .answer-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.75rem;
+
+                .answer-label {
+                    color: c.$purple-darker;
+                    font-weight: 500;
+                    margin: 0;
+                }
+            }
+
+            .answer-input {
+                background-color: rgba(0, 0, 0, 0.6);
+                border: 1px solid rgba(c.$light, 0.2);
+                border-radius: 8px;
+                color: c.$light;
+                padding: 0.75rem;
+                width: 100%;
+                margin-bottom: 0.75rem;
+
+                &:focus {
+                    border-color: c.$purple-darker;
+                    box-shadow: 0 0 0 .25rem rgba(c.$purple-darker, .25);
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: rgba(c.$light, .6);
+                }
+            }
+        }
+    }
+
+   
+    .custom-toggle {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+
+        .toggle-checkbox {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            transition: 0.4s;
+            border-radius: 25px;
+
+            &:before {
+                position: absolute;
+                content: "";
+                height: 19px;
+                width: 19px;
+                left: 3px;
+                bottom: 3px;
+                background-color: c.$light;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+        }
+
+        .toggle-checkbox:checked + .toggle-slider {
+            background-color: c.$purple-darker;
+
+            &:before {
+                transform: translateX(25px);
+            }
+        }
+    }
+
+    .toggle-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: rgba(c.$light, 0.6);
+    }
+
+    .answer-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .toggle-label {
+            color: rgba(c.$light, 0.8);
+            font-size: 0.8rem;
+        }
+    }
