@@ -1,0 +1,211 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Création du quizz - Squizz Game
+{% endblock %}
+
+{% block body %}
+<div class="create-quizz-section container mb-5">
+  {% include '/create-quizz/_header.html.twig' %}
+</div>
+
+<div class="quiz-creator-container container">
+
+  {# PREMIER FORMULAIRE - Informations générales #}
+  <div class="row info-form-section d-flex align-items-center mb-3 mb-lg-5">
+    <div class="col-12 col-lg-6">
+      <div class="quiz-form-container">
+        <div class="quiz-form-header">
+          <h2 class="form-title text-start mb-3 mb-lg-4">
+            informations générales
+          </h2>
+          <div class="quiz-form p-3 p-md-4 p-lg-5">
+            {{ form_start(infoform) }}
+
+            <div class="d-flex gap-4">
+              <img src="{{ asset('./images/sarah-avatar.png') }}" class="mb-3 rounded-circle d-block img-fluid" height="184" width="184" alt="avatar de Sarah">
+                <div class="w-100">
+                  <div class="mb-3">
+                    {{ form_label(infoform.name, 'Nom du Quiz', {'attr': {'class': 'form-label' }}
+                    ) }}
+                    {{ form_widget(infoform.name, {'attr': {'class': 'form-control' }}
+                    ) }}
+                  </div>
+
+                  <div class="mb-3">
+                    {{ form_label(infoform.category, 'Catégorie', {'attr': {'class': 'form-label' }}
+                    ) }}
+                    {{ form_widget(infoform.category, {'attr': {'class': 'form-control' }}
+                    ) }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                {{ form_label(infoform.logo, 'Logo', {'attr': {'class': 'form-label' }}
+                ) }}
+                {{ form_widget(infoform.logo, {'attr': {'class': 'form-control' }}
+                ) }}
+              </div>
+
+              <div class="mb-3">
+                {{ form_label(infoform.description, 'Description', {'attr': {'class': 'form-label' }}
+                ) }}
+                {{ form_widget(infoform.description, {'attr': {'class': 'form-control', 'rows': 4 }}
+                ) }}
+              </div>
+
+              {# <button type="submit" class="btn btn-primary">Créer le Quizz</button> #}
+              {{ form_end(infoform) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6 section-1-part-r d-none d-lg-flex flex-column gap-4 ps-4">
+        <img src="{{ asset('./images/shapes/triangle-pink.svg') }}" class="shape shape-triangle-pink ms-auto d-inline-block" height="180" width="200" alt="triangle pink">
+          <img src="{{ asset('./images/mascot-1.svg') }}" class="mx-auto d-inline-block" height="331" width="274" alt="mascot">
+            <img src="{{ asset('./images/shapes/circle-purple.svg') }}" class="shape shape-circle-purple me-auto d-inline-block" height="173" width="173" alt="circle purple"></div>
+          </div>
+
+          {# SECOND FORMULAIRE - Création des questions #}
+          <div class="row questions-form-section d-flex align-items-center mb-3 mb-lg-5">
+            <div class="col-12">
+              <div class="quiz-form-container">
+                <div class="quiz-form-header">
+                  <h2 class="form-title text-start mb-3 mb-lg-4">
+                    Création des questions
+                  </h2>
+                  <div class="quiz-form p-3 p-md-4 p-lg-5">
+                    {{ form_start(questionform, {'attr': {'class': 'question-form' }}
+                    ) }}
+                    {# Ligne des 4 champs principaux #}
+                    <div class="row mb-4">
+                      <div class="col-md-3">
+                        <div class="mb-3">
+                          {{ form_label(questionform.quizz, 'Type de question', {'attr': {'class': 'form-label' }}
+                          ) }}
+                          {{ form_widget(questionform.quizz, {'attr': {'class': 'form-control' }}
+                          ) }}
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="mb-3">
+                          {{ form_label(questionform.timeMax, 'Temps de réponse', {'attr': {'class': 'form-label' }}
+                          ) }}
+                          {{ form_widget(questionform.timeMax, {'attr': {'class': 'form-control' }}
+                          ) }}
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="mb-3">
+                          {{ form_label(questionform.scoreMin, 'Score Min', {'attr': {'class': 'form-label' }}
+                          ) }}
+                          {{ form_widget(questionform.scoreMin, {'attr': {'class': 'form-control', 'placeholder': '300' }}
+                          ) }}
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="mb-3">
+                          {{ form_label(questionform.scoreMax, 'Score Max', {'attr': {'class': 'form-label' }}
+                          ) }}
+                          {{ form_widget(questionform.scoreMax, {'attr': {'class': 'form-control', 'placeholder': '900' }}
+                          ) }}
+                        </div>
+                      </div>
+                    </div>
+
+                    {# Zone des contenus #}
+                    <div class="row mb-4">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          {{ form_label(questionform.content, 'Contenu de la question', {'attr': {'class': 'form-label' }}
+                          ) }}
+                          {{ form_widget(questionform.content, {
+                      'attr': {
+                        'class': 'form-control',
+                        'rows': 4,
+                        'placeholder': 'Donner l\'équivalence à 1rem en pixel ? (Sans avoir modifié les paramètres de son navigateur internet)'
+                      }
+                    }) }}
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    {{ form_label(questionform.explanation, 'Complément question (affiché lors de la réponse)', {'attr': {'class': 'form-label' }}) }}
+                    {{ form_widget(questionform.explanation, {
+                      'attr': {
+                        'class': 'form-control',
+                        'rows': 4,
+                        'placeholder': 'Des rem et em sont des unités de mesure relatives dont beaucoup de développeurs tirent parti pour préserver l\'accessibilité. Rem (root em) signifie "root element\'s font-size" (en français, "taille de police de l\'élément racine").'
+                      }
+                    }) }}
+                        </div>
+                      </div>
+                    </div>
+
+                    {# Grille des 4 réponses avec toggle Bootstrap #}
+                    <div class="answers-grid">
+                      {% set placeholders = ['32px', '48px', '16px', 'Ça n\'existe pas les rem...'] %}
+
+                {% for i, answerForm in questionform.answers %}
+                  {% if i < 4 %}
+                    <div class="answer-card">
+                      <div class="answer-header">
+                        <div class="mb-2">
+                          {{ form_label(answerForm.content, 'Réponse ' ~ (i + 1), {'attr': {'class': 'form-label text-white'}}) }}
+                        </div>
+                        <div class="answer-toggle">
+                          <span class="toggle-label text-white">Réponse correcte ?</span>
+                          <div class="form-check form-switch">
+                            {{ form_widget(answerForm.isCorrect, {
+                              'attr': {
+                                'class': 'form-check-input',
+                                'role': 'switch',
+                                'id': 'switch_' ~ i,
+                               
+                              }
+                            }) }}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        {{ form_row(answerForm.content, {
+                          'attr': {
+                            'placeholder': placeholders[i],
+                            'class': 'form-control'
+                          }
+                        }) }}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              {# Boutons d'action #}
+              <div class="d-flex gap-3 mt-4">
+                <button type="button" class="btn btn-outline-primary">Enregistrer</button>
+                <button type="submit" class="btn btn-primary">Publier le quizz</button>
+              </div>
+              
+              {{ form_end(questionform) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Triangle décoratif #}
+    <div class="col-1 section-1-part-r d-none d-lg-flex ">
+      <img src="{{ asset('./images/shapes/triangle-yellow.svg') }}" class="shape shape-triangle-yellow ms-auto d-inline-block" height="180" width="200" alt="triangle yellow"> 
+    </div>
+      
+    </div>
+  </div>
+
+{% endblock %}
+                      
