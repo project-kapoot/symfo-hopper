@@ -3,21 +3,23 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{% block title %}{% endblock %}</title>
-        {% block stylesheets %}
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		{% block stylesheets %}
 			{{ importmap('app') }}
-        {% endblock %}
+		{% endblock %}
 	</head>
 	<body>
+		{% set route_name = app.request.attributes.get('_route') %}
 		{% include '_partials/_navbar.html.twig' %}
 
-		<main> 
-            {% block body %}{% endblock %}
+		<main>
+			{% block body %}{% endblock %}
 		</main>
 
 		{% include '_partials/_footer.html.twig' %}
 
-        {% block javascripts %}
-		{% endblock %}
+		{% block javascripts %}{% endblock %}
 	</body>
 </html>

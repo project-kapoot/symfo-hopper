@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Squizz Game
+{% endblock %}
+
+{% block body %}
+	<header class="login-section">
+		<div class="bg bg-warning">
+			<img src="{{ asset('./images/login-header-bg.png')}}" alt="fond de l'en-tête" class="img-fluid">
+		</div>
+		<div class="row h-100">
+			<div class="col-12 col-md-8 d-flex align-items-center justify-content-center px-3 px-sm-4 px-md-5">
+				<form method="post" class="login-form tooltip-wrapper p-4 z-3">
+					{% if error %}
+						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+
+					{% if app.user %}
+						<div class="mb-3">
+							You are logged in as
+							{{ app.user.userIdentifier }},
+							<a href="{{ path('app_logout') }}">Déconnexion</a>
+						</div>
+					{% endif %}
+
+					<h1 class="h2 txt-orange text-center mb-3">Retour sur le plateau</h1>
+					<p class="h4 text-center mb-4">Les projecteurs vous attendent</p>
+
+
+					<div class="form-floating mb-3">
+						<input type="email" name="_username" value="{{ last_username }}" class="form-control" id="username" placeholder="" autocomplete="email" required autofocus>
+						<label for="username" class="txt-light">Email</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input type="password" name="_password" class="form-control" id="password" autocomplete="current-password" placeholder="" required>
+						<label for="password" class="txt-light">Mot de passe</label>
+					</div>
+					<input
+					type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					{#
+						Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+						See https://symfony.com/doc/current/security/remember_me.html
+										
+						<div class="checkbox mb-3">
+							<input type="checkbox" name="_remember_me" id="_remember_me">
+							<label for="_remember_me">Remember me</label>
+						</div>
+					#}
+
+					<button class="btn btn-outline-primary w-100" type="submit">
+						Connexion
+					</button>
+				</form>
+			</div>
+		</div>
+
+
+	</header>
+
+{% endblock %}
