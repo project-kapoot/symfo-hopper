@@ -57,7 +57,7 @@ class CreateQuestionFormType extends AbstractType
             ])
             ->add('quizz', EntityType::class, [
                 'class' => Quizz::class,
-                    'choice_label' => 'title', 
+                    'choice_label' => 'name', 
                     'label' => 'Quiz associé',
                     'placeholder' => 'Choisir un quiz...'
                 ])
